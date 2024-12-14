@@ -1,0 +1,42 @@
+{
+  "name": "@roughapp/slack-sdk",
+  "private": true,
+  "version": "0.1.0",
+  "packageManager": "pnpm@9.15.0",
+  "type": "module",
+  "main": "./src/index.ts",
+  "author": {
+    "name": "George Czabania"
+  },
+  "license": "MIT",
+  "imports": {
+    "#src/*": "./src/*"
+  },
+  "scripts": {
+    "test": "vitest",
+    "test:coverage": "vitest --run --coverage",
+    "tidy": "biome check --write --unsafe",
+    "tidy:check": "biome check",
+    "knip": "knip",
+    "check": "tsc --noEmit",
+    "build": "tsup"
+  },
+  "dependencies": {
+    "@stayradiated/error-boundary": "4.3.0",
+    "arctic": "2.3.1"
+  },
+  "devDependencies": {
+    "@biomejs/biome": "1.9.4",
+    "@types/node": "22.10.2",
+    "@vitest/coverage-v8": "2.1.8",
+    "knip": "5.40.0",
+    "tsup": "8.3.5",
+    "typescript": "5.7.2",
+    "undici": "7.1.0",
+    "vite-tsconfig-paths": "5.1.4",
+    "vitest": "2.1.8"
+  },
+  "engines": {
+    "node": "^22.9.0"
+  }
+}
