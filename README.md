@@ -1,11 +1,11 @@
-# @roughapp/slack-sdk
+# @roughapp/sdk
 
 A TypeScript SDK for interacting with the Rough API.
 
 ## Installation
 
 ```bash
-npm install @roughapp/slack-sdk
+npm install @roughapp/sdk
 ```
 
 ## Usage
@@ -13,7 +13,7 @@ npm install @roughapp/slack-sdk
 ### OAuth2 Authentication
 
 ```typescript
-import { createRoughOAuth2Provider } from '@roughapp/slack-sdk'
+import { createRoughOAuth2Provider } from '@roughapp/sdk'
 
 const oauth2 = createRoughOAuth2Provider({
   baseUrl: 'https://in.rough.app',
@@ -27,7 +27,7 @@ const oauth2 = createRoughOAuth2Provider({
 
 #### Get User
 ```typescript
-import { getUser } from '@roughapp/slack-sdk'
+import { getUser } from '@roughapp/sdk'
 
 const user = await getUser({
   baseUrl: 'https://in.rough.app',
@@ -38,7 +38,7 @@ const user = await getUser({
 
 #### Get Workspace
 ```typescript
-import { getWorkspace } from '@roughapp/slack-sdk'
+import { getWorkspace } from '@roughapp/sdk'
 
 const workspace = await getWorkspace({
   baseUrl: 'https://in.rough.app',
@@ -49,7 +49,7 @@ const workspace = await getWorkspace({
 
 #### Create Note
 ```typescript
-import { createNote } from '@roughapp/slack-sdk'
+import { createNote } from '@roughapp/sdk'
 
 const note = await createNote({
   baseUrl: 'https://in.rough.app',
@@ -63,7 +63,7 @@ const note = await createNote({
 
 #### Create Reference
 ```typescript
-import { createReference } from '@roughapp/slack-sdk'
+import { createReference } from '@roughapp/sdk'
 
 const reference = await createReference({
   baseUrl: 'https://in.rough.app',
@@ -75,7 +75,7 @@ const reference = await createReference({
 
 #### Create Customer
 ```typescript
-import { createCustomer } from '@roughapp/slack-sdk'
+import { createCustomer } from '@roughapp/sdk'
 
 const customer = await createCustomer({
   baseUrl: 'https://in.rough.app',
