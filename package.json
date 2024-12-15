@@ -19,7 +19,8 @@
     "tidy:check": "biome check",
     "knip": "knip",
     "check": "tsc --noEmit",
-    "build": "tsup"
+    "build": "tsup",
+    "prepublish": "tsup"
   },
   "dependencies": {
     "@stayradiated/error-boundary": "4.3.0",
