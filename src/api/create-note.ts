@@ -7,9 +7,11 @@ type CreateNoteOptions = {
   apiToken: string
 
   content: string
+  contentFormat?: 'plaintext' | 'markdown'
   createdByUserId: string
   referenceId?: string
   customerId?: string
+  lastModifiedAt?: Date
 }
 
 const createNote = async (
@@ -19,9 +21,11 @@ const createNote = async (
     baseUrl,
     apiToken,
     content,
+    contentFormat,
     createdByUserId,
     referenceId,
     customerId,
+    lastModifiedAt,
   } = options
 
   return errorBoundary(async () => {
@@ -33,9 +37,11 @@ const createNote = async (
       },
       body: JSON.stringify({
         content,
+        contentFormat,
         createdByUserId,
         referenceId,
         customerId,
+        lastModifiedAt: lastModifiedAt?.toISOString(),
       }),
     })
     if (!response.ok) {
