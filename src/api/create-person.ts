@@ -1,21 +1,21 @@
 import { errorBoundary } from '@stayradiated/error-boundary'
 
-import type { Customer } from '#src/types.ts'
+import type { Person } from '#src/types.ts'
 
-type CreateCustomerOptions = {
+type CreatePersonOptions = {
   baseUrl: string
   apiToken: string
 
   name: string
 }
 
-const createCustomer = async (
-  options: CreateCustomerOptions,
-): Promise<Customer | Error> => {
+const createPerson = async (
+  options: CreatePersonOptions,
+): Promise<Person | Error> => {
   const { baseUrl, apiToken, name } = options
 
   return errorBoundary(async () => {
-    const response = await fetch(new URL('/api/v1/customer', baseUrl), {
+    const response = await fetch(new URL('/api/v1/person', baseUrl), {
       method: 'POST',
       headers: {
         authorization: `Bearer ${apiToken}`,
@@ -27,11 +27,11 @@ const createCustomer = async (
     })
     if (!response.ok) {
       return new Error(
-        `Failed to create customer: ${response.status} ${response.statusText}`,
+        `Failed to create person: ${response.status} ${response.statusText}`,
       )
     }
-    return response.json() as Promise<Customer>
+    return response.json() as Promise<Person>
   })
 }
 
-export { createCustomer }
+export { createPerson }

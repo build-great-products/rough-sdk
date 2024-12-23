@@ -4,7 +4,7 @@ type Note = {
   title: string
   contentId: string
   referenceId?: string
-  customerId?: string
+  personId?: string
   lastModifiedByUserId: string
   lastModifiedAt: number
 }
@@ -39,9 +39,9 @@ type Reference = {
   url: string
 }
 
-type Customer = {
+type Person = {
   id: string
   name: string
 }
 
-export type { Note, User, Workspace, Reference, Customer }
+export type { Note, User, Workspace, Reference, Person }

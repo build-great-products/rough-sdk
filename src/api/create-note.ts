@@ -10,7 +10,7 @@ type CreateNoteOptions = {
   contentFormat?: 'plaintext' | 'markdown'
   createdByUserId: string
   referenceId?: string
-  customerId?: string
+  personId?: string
   lastModifiedAt?: Date
 }
 
@@ -24,7 +24,7 @@ const createNote = async (
     contentFormat,
     createdByUserId,
     referenceId,
-    customerId,
+    personId,
     lastModifiedAt,
   } = options
 
@@ -40,7 +40,7 @@ const createNote = async (
         contentFormat,
         createdByUserId,
         referenceId,
-        customerId,
+        personId,
         lastModifiedAt: lastModifiedAt?.toISOString(),
       }),
     })
