@@ -78,7 +78,7 @@ const note = await createNote({
   contentFormat: 'markdown', // optional: 'plaintext' | 'markdown'
   createdByUserId: 'USER_ID',
   referenceId: 'REFERENCE_ID', // optional
-  customerId: 'CUSTOMER_ID', // optional
+  personId: 'PERSON_ID', // optional
   lastModifiedAt: new Date() // optional
 })
 
@@ -103,20 +103,20 @@ const reference = await createReference({
 })
 ```
 
-#### Customers
+#### Persons
 
 ```typescript
-// Create a new customer
-import { createCustomer } from '@roughapp/sdk'
-const customer = await createCustomer({
+// Create a new person
+import { createPerson } from '@roughapp/sdk'
+const person = await createPerson({
   baseUrl: 'https://in.rough.app',
   apiToken: 'YOUR_API_TOKEN',
-  name: 'Customer name'
+  name: 'Person name'
 })
 
-// Get list of customers
-import { getCustomerList } from '@roughapp/sdk'
-const customers = await getCustomerList({
+// Get list of persons
+import { getPersonList } from '@roughapp/sdk'
+const persons = await getPersonList({
   baseUrl: 'https://in.rough.app',
   apiToken: 'YOUR_API_TOKEN'
 })
@@ -133,7 +133,7 @@ type Note = {
   title: string
   contentId: string
   referenceId?: string
-  customerId?: string
+  personId?: string
   lastModifiedByUserId: string
   lastModifiedAt: number
 }
@@ -168,7 +168,7 @@ type Reference = {
   url: string
 }
 
-type Customer = {
+type Person = {
   id: string
   name: string
 }
