@@ -5,15 +5,32 @@ import type { Person } from '#src/types.ts'
 type GetPersonListOptions = {
   baseUrl: string
   apiToken: string
+
+  where?: {
+    name?: string
+    email?: string
+    description?: string
+  }
 }
 
 const getPersonList = async (
   options: GetPersonListOptions,
 ): Promise<Person[] | Error> => {
-  const { baseUrl, apiToken } = options
+  const { baseUrl, apiToken, where = {} } = options
 
   return errorBoundary(async () => {
-    const response = await fetch(new URL('/api/v1/person', baseUrl), {
+    const url = new URL('/api/v1/person', baseUrl)
+    if (typeof where.name === 'string') {
+      url.searchParams.set('name', where.name)
+    }
+    if (typeof where.email === 'string') {
+      url.searchParams.set('email', where.email)
+    }
+    if (typeof where.description === 'string') {
+      url.searchParams.set('description', where.description)
+    }
+
+    const response = await fetch(url, {
       method: 'GET',
       headers: {
         authorization: `Bearer ${apiToken}`,

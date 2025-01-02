@@ -12,7 +12,7 @@ type UpsertPersonOptions = {
   image?: string
 }
 
-const upsertPerson = async (
+const upsertPersonByEmail = async (
   options: UpsertPersonOptions,
 ): Promise<Person | Error> => {
   const { baseUrl, apiToken, email, name, description, image } = options
@@ -39,4 +39,4 @@ const upsertPerson = async (
   })
 }
 
-export { upsertPerson }
+export { upsertPersonByEmail }
