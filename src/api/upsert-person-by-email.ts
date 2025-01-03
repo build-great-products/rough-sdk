@@ -18,18 +18,21 @@ const upsertPersonByEmail = async (
   const { baseUrl, apiToken, email, name, description, image } = options
 
   return errorBoundary(async () => {
-    const response = await fetch(new URL(`/api/v1/person/${email}`, baseUrl), {
-      method: 'PUT',
-      headers: {
-        authorization: `Bearer ${apiToken}`,
-        'content-type': 'application/json',
+    const response = await fetch(
+      new URL(`/api/v1/person/email/${email}`, baseUrl),
+      {
+        method: 'PUT',
+        headers: {
+          authorization: `Bearer ${apiToken}`,
+          'content-type': 'application/json',
+        },
+        body: JSON.stringify({
+          name,
+          description,
+          image,
+        }),
       },
-      body: JSON.stringify({
-        name,
-        description,
-        image,
-      }),
-    })
+    )
     if (!response.ok) {
       return new Error(
         `Failed to upsert person: ${response.status} ${response.statusText}`,
