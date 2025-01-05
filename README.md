@@ -8,9 +8,60 @@ A TypeScript SDK for interacting with the Rough API.
 npm install @roughapp/sdk
 ```
 
-## Usage
+## Authorization
 
-### OAuth2 Authentication
+All API requests require an Authorization header with a Bearer token. When making requests, include your API key like this:
+
+```typescript
+import { getDocumentList } from '@roughapp/sdk'
+
+const response = await getDocumentList({
+  headers: {
+    Authorization: "Bearer YOUR_API_KEY"
+  }
+})
+```
+
+## Available Endpoints
+
+### Documents
+```typescript
+// Get all documents
+const documents = await getDocumentList({
+  headers: { Authorization: "Bearer $API_KEY" },
+  query: { includeArchived: 'false' }
+})
+
+// Get a specific document
+const document = await getDocument({
+  headers: { Authorization: "Bearer $API_KEY" },
+  path: { documentId: "123" }
+})
+```
+
+### Notes
+- `getNoteList()` - Get all notes
+- `createNote()` - Create a new note
+- `getNote()` - Get a specific note
+- `deleteNote()` - Delete a note
+
+### People
+- `getPersonList()` - List all people
+- `createPerson()` - Create a new person
+- `getPerson()` - Get a specific person
+- `getPersonByEmail()` - Find person by email
+- `upsertPerson()` - Create or update a person
+
+### Other Resources
+- `getWorkspace()` - Get workspace details
+- `getContentList()` - List all content
+- `getLabelList()` - List all labels
+- `getReferenceList()` - List all references
+- `getUserList()` - List all users
+
+## OAuth2 Authentication
+
+For OAuth2 authentication flows:
 
 ```typescript
 import { createRoughOAuth2Provider } from '@roughapp/sdk'
@@ -23,157 +74,4 @@ const oauth2 = createRoughOAuth2Provider({
 })
 ```
 
-### API Endpoints
-
-#### Users
-
-```typescript
-// Get a single user
-import { getUser } from '@roughapp/sdk'
-const user = await getUser({
-  baseUrl: 'https://in.rough.app',
-  apiToken: 'YOUR_API_TOKEN',
-  userId: 'USER_ID'
-})
-
-// Get list of users
-import { getUserList } from '@roughapp/sdk'
-const users = await getUserList({
-  baseUrl: 'https://in.rough.app',
-  apiToken: 'YOUR_API_TOKEN'
-})
-
-// Create a new user
-import { createUser } from '@roughapp/sdk'
-const newUser = await createUser({
-  baseUrl: 'https://in.rough.app',
-  apiToken: 'YOUR_API_TOKEN',
-  name: 'User Name',
-  email: 'user@example.com',
-  image: 'IMAGE_URL' // optional
-})
-```
-
-#### Workspace
-
-```typescript
-import { getWorkspace } from '@roughapp/sdk'
-
-const workspace = await getWorkspace({
-  baseUrl: 'https://in.rough.app',
-  apiToken: 'YOUR_API_TOKEN',
-  workspaceId: 'WORKSPACE_ID'
-})
-```
-
-#### Notes
-
-```typescript
-// Create a new note
-import { createNote } from '@roughapp/sdk'
-const note = await createNote({
-  baseUrl: 'https://in.rough.app',
-  apiToken: 'YOUR_API_TOKEN',
-  content: 'Note content',
-  contentFormat: 'markdown', // optional: 'plaintext' | 'markdown'
-  createdByUserId: 'USER_ID',
-  referenceId: 'REFERENCE_ID', // optional
-  personId: 'PERSON_ID', // optional
-  lastModifiedAt: new Date() // optional
-})
-
-// Get list of notes
-import { getNoteList } from '@roughapp/sdk'
-const notes = await getNoteList({
-  baseUrl: 'https://in.rough.app',
-  apiToken: 'YOUR_API_TOKEN'
-})
-```
-
-#### References
-
-```typescript
-// Create a new reference
-import { createReference } from '@roughapp/sdk'
-const reference = await createReference({
-  baseUrl: 'https://in.rough.app',
-  apiToken: 'YOUR_API_TOKEN',
-  name: 'Reference name',
-  url: 'https://example.com'
-})
-```
-
-#### Persons
-
-```typescript
-// Create a new person
-import { createPerson } from '@roughapp/sdk'
-const person = await createPerson({
-  baseUrl: 'https://in.rough.app',
-  apiToken: 'YOUR_API_TOKEN',
-  name: 'Person name'
-})
-
-// Get list of persons
-import { getPersonList } from '@roughapp/sdk'
-const persons = await getPersonList({
-  baseUrl: 'https://in.rough.app',
-  apiToken: 'YOUR_API_TOKEN'
-})
-```
-
-## Types
-
-The SDK exports the following TypeScript types:
-
-```typescript
-type Note = {
-  id: string
-  status: string
-  title: string
-  contentId: string
-  referenceId?: string
-  personId?: string
-  lastModifiedByUserId: string
-  lastModifiedAt: number
-}
-
-type User = {
-  id: string
-  email: string
-  name: string
-  image?: {
-    xs: string
-    sm: string
-    md: string
-    lg: string
-    xl: string
-  }
-  isDemoAccount: boolean
-}
-
-type Workspace = {
-  id: string
-  publicId: string
-  name: string
-  icp: string
-  strategy: string
-  vision: string
-  icon: string
-}
-
-type Reference = {
-  id: string
-  name: string
-  url: string
-}
-
-type Person = {
-  id: string
-  name: string
-}
-```
-
-## License
-
-MIT
+For detailed API documentation and request/response types, please refer to the source code or contact Rough support.

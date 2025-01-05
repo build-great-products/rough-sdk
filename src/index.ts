@@ -1,16 +1,8 @@
-export * from './api/create-note.ts'
-export * from './api/create-person.ts'
-export * from './api/create-reference.ts'
-export * from './api/create-user.ts'
-export * from './api/delete-note.ts'
-export * from './api/get-note-list.ts'
-export * from './api/get-person-by-email.ts'
-export * from './api/get-person-list.ts'
-export * from './api/get-person.ts'
-export * from './api/get-user-list.ts'
-export * from './api/get-user.ts'
-export * from './api/get-workspace.ts'
-export * from './api/upsert-person-by-email.ts'
+import { client } from './api/index.ts'
 
+client.setConfig({
+  baseUrl: 'https://in.rough.app',
+})
+
+export * from './api/index.ts'
 export * from './oauth2.ts'
-export type * from './types.ts'
