@@ -216,27 +216,21 @@ export type GetBlockListData = {
 
 export type GetBlockListResponse = Array<Block>
 
-export type GetBlockListError =
-  | {
-      message: string
-    }
-  | unknown
+export type GetBlockListError = {
+  message: string
+}
 
 export type GetCommentListResponse = Array<Comment>
 
-export type GetCommentListError =
-  | {
-      message: string
-    }
-  | unknown
+export type GetCommentListError = {
+  message: string
+}
 
 export type GetContentListResponse = Array<Content>
 
-export type GetContentListError =
-  | {
-      message: string
-    }
-  | unknown
+export type GetContentListError = {
+  message: string
+}
 
 export type GetContentData = {
   path: {
@@ -246,11 +240,9 @@ export type GetContentData = {
 
 export type GetContentResponse = Content
 
-export type GetContentError =
-  | {
-      message: string
-    }
-  | unknown
+export type GetContentError = {
+  message: string
+}
 
 export type GetDocumentListData = {
   query?: {
@@ -263,11 +255,9 @@ export type GetDocumentListData = {
 
 export type GetDocumentListResponse = Array<Document>
 
-export type GetDocumentListError =
-  | {
-      message: string
-    }
-  | unknown
+export type GetDocumentListError = {
+  message: string
+}
 
 export type GetDocumentData = {
   path: {
@@ -277,35 +267,27 @@ export type GetDocumentData = {
 
 export type GetDocumentResponse = Document
 
-export type GetDocumentError =
-  | {
-      message: string
-    }
-  | unknown
+export type GetDocumentError = {
+  message: string
+}
 
 export type GetLabelListResponse = Array<Label>
 
-export type GetLabelListError =
-  | {
-      message: string
-    }
-  | unknown
+export type GetLabelListError = {
+  message: string
+}
 
 export type GetNoteLabelListResponse = Array<NoteLabel>
 
-export type GetNoteLabelListError =
-  | {
-      message: string
-    }
-  | unknown
+export type GetNoteLabelListError = {
+  message: string
+}
 
 export type GetNoteListResponse = Array<Note>
 
-export type GetNoteListError =
-  | {
-      message: string
-    }
-  | unknown
+export type GetNoteListError = {
+  message: string
+}
 
 export type CreateNoteData = {
   body?: {
@@ -320,11 +302,9 @@ export type CreateNoteData = {
 
 export type CreateNoteResponse = Note
 
-export type CreateNoteError =
-  | {
-      message: string
-    }
-  | unknown
+export type CreateNoteError = {
+  message: string
+}
 
 export type DeleteNoteData = {
   path: {
@@ -336,11 +316,9 @@ export type DeleteNoteResponse = {
   [key: string]: unknown
 }
 
-export type DeleteNoteError =
-  | {
-      message: string
-    }
-  | unknown
+export type DeleteNoteError = {
+  message: string
+}
 
 export type GetNoteData = {
   path: {
@@ -350,11 +328,9 @@ export type GetNoteData = {
 
 export type GetNoteResponse = Note
 
-export type GetNoteError =
-  | {
-      message: string
-    }
-  | unknown
+export type GetNoteError = {
+  message: string
+}
 
 export type GetPersonListData = {
   query?: {
@@ -366,11 +342,9 @@ export type GetPersonListData = {
 
 export type GetPersonListResponse = Array<Person>
 
-export type GetPersonListError =
-  | {
-      message: string
-    }
-  | unknown
+export type GetPersonListError = {
+  message: string
+}
 
 export type CreatePersonData = {
   body?: {
@@ -383,11 +357,9 @@ export type CreatePersonData = {
 
 export type CreatePersonResponse = Person
 
-export type CreatePersonError =
-  | {
-      message: string
-    }
-  | unknown
+export type CreatePersonError = {
+  message: string
+}
 
 export type GetPersonData = {
   path: {
@@ -397,11 +369,9 @@ export type GetPersonData = {
 
 export type GetPersonResponse = Person
 
-export type GetPersonError =
-  | {
-      message: string
-    }
-  | unknown
+export type GetPersonError = {
+  message: string
+}
 
 export type GetPersonByEmailData = {
   path: {
@@ -411,11 +381,9 @@ export type GetPersonByEmailData = {
 
 export type GetPersonByEmailResponse = Person
 
-export type GetPersonByEmailError =
-  | {
-      message: string
-    }
-  | unknown
+export type GetPersonByEmailError = {
+  message: string
+}
 
 export type UpsertPersonData = {
   body?: {
@@ -430,19 +398,15 @@ export type UpsertPersonData = {
 
 export type UpsertPersonResponse = Person
 
-export type UpsertPersonError =
-  | {
-      message: string
-    }
-  | unknown
+export type UpsertPersonError = {
+  message: string
+}
 
 export type GetReferenceListResponse = Array<Reference>
 
-export type GetReferenceListError =
-  | {
-      message: string
-    }
-  | unknown
+export type GetReferenceListError = {
+  message: string
+}
 
 export type CreateReferenceData = {
   body?: {
@@ -453,31 +417,27 @@ export type CreateReferenceData = {
 
 export type CreateReferenceResponse = Reference
 
-export type CreateReferenceError = unknown
+export type CreateReferenceError = {
+  message: string
+}
 
 export type GetSequenceDocumentListResponse = Array<SequenceDocument>
 
-export type GetSequenceDocumentListError =
-  | {
-      message: string
-    }
-  | unknown
+export type GetSequenceDocumentListError = {
+  message: string
+}
 
 export type GetSequenceListResponse = Array<Sequence>
 
-export type GetSequenceListError =
-  | {
-      message: string
-    }
-  | unknown
+export type GetSequenceListError = {
+  message: string
+}
 
 export type GetUserListResponse = Array<User>
 
-export type GetUserListError =
-  | {
-      message: string
-    }
-  | unknown
+export type GetUserListError = {
+  message: string
+}
 
 export type CreateUserData = {
   body?: {
@@ -489,11 +449,9 @@ export type CreateUserData = {
 
 export type CreateUserResponse = User
 
-export type CreateUserError =
-  | {
-      message: string
-    }
-  | unknown
+export type CreateUserError = {
+  message: string
+}
 
 export type GetUserData = {
   path: {
@@ -503,16 +461,12 @@ export type GetUserData = {
 
 export type GetUserResponse = User
 
-export type GetUserError =
-  | {
-      message: string
-    }
-  | unknown
+export type GetUserError = {
+  message: string
+}
 
 export type GetWorkspaceResponse = Workspace
 
-export type GetWorkspaceError =
-  | {
-      message: string
-    }
-  | unknown
+export type GetWorkspaceError = {
+  message: string
+}

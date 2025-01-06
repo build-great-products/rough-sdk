@@ -1,7 +1,7 @@
 {
   "name": "@roughapp/sdk",
   "version": "2.0.0",
-  "packageManager": "pnpm@9.15.2",
+  "packageManager": "pnpm@9.15.3",
   "type": "module",
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
@@ -24,13 +24,13 @@
     "openapi-ts": "node --experimental-strip-types ./openapi-ts.ts && biome format --write"
   },
   "dependencies": {
-    "@hey-api/client-fetch": "0.5.7",
+    "@hey-api/client-fetch": "0.6.0",
     "@stayradiated/error-boundary": "4.3.0",
-    "arctic": "3.0.0"
+    "arctic": "3.1.0"
   },
   "devDependencies": {
     "@biomejs/biome": "1.9.4",
-    "@hey-api/openapi-ts": "0.60.1",
+    "@hey-api/openapi-ts": "0.61.0",
     "@types/node": "22.10.5",
     "@vitest/coverage-v8": "2.1.8",
     "knip": "5.41.1",
