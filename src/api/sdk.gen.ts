@@ -9,6 +9,8 @@ import type {
   CreateNoteData,
   CreateNoteError,
   CreateNoteResponse,
+  CreatePendingFileUploadError,
+  CreatePendingFileUploadResponse,
   CreatePersonData,
   CreatePersonError,
   CreatePersonResponse,
@@ -68,9 +70,9 @@ import type {
   GetUserResponse,
   GetWorkspaceError,
   GetWorkspaceResponse,
-  UpsertPersonData,
-  UpsertPersonError,
-  UpsertPersonResponse,
+  UpdatePersonData,
+  UpdatePersonError,
+  UpdatePersonResponse,
 } from './types.gen'
 
 export const client = createClient(createConfig())
@@ -174,6 +176,23 @@ export const getDocument = <ThrowOnError extends boolean = false>(
   >({
     ...options,
     url: '/api/v1/document/{documentId}',
+  })
+}
+
+/**
+ * Retrieve a token to upload a file
+ * Retrieve a token to upload a file using the tus protocol.
+ */
+export const createPendingFileUpload = <ThrowOnError extends boolean = false>(
+  options?: OptionsLegacyParser<unknown, ThrowOnError>,
+) => {
+  return (options?.client ?? client).post<
+    CreatePendingFileUploadResponse,
+    CreatePendingFileUploadError,
+    ThrowOnError
+  >({
+    ...options,
+    url: '/api/v1/file-upload',
   })
 }
 
@@ -331,6 +350,23 @@ export const getPerson = <ThrowOnError extends boolean = false>(
 }
 
 /**
+ * Update person
+ * Update a person in the workspace. The person must already exist in the workspace.
+ */
+export const updatePerson = <ThrowOnError extends boolean = false>(
+  options: OptionsLegacyParser<UpdatePersonData, ThrowOnError>,
+) => {
+  return (options?.client ?? client).put<
+    UpdatePersonResponse,
+    UpdatePersonError,
+    ThrowOnError
+  >({
+    ...options,
+    url: '/api/v1/person/{personId}',
+  })
+}
+
+/**
  * Get person by email
  * Get a person by their email address
  */
@@ -340,23 +376,6 @@ export const getPersonByEmail = <ThrowOnError extends boolean = false>(
   return (options?.client ?? client).get<
     GetPersonByEmailResponse,
     GetPersonByEmailError,
-    ThrowOnError
-  >({
-    ...options,
-    url: '/api/v1/person/email/{email}',
-  })
-}
-
-/**
- * Upsert person
- * Upsert a person into the workspace. If an existing person already has a given email address, they will be updated. If not, a new person will be created.
- */
-export const upsertPerson = <ThrowOnError extends boolean = false>(
-  options: OptionsLegacyParser<UpsertPersonData, ThrowOnError>,
-) => {
-  return (options?.client ?? client).put<
-    UpsertPersonResponse,
-    UpsertPersonError,
     ThrowOnError
   >({
     ...options,

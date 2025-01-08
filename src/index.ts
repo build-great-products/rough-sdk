@@ -6,3 +6,4 @@ client.setConfig({
 
 export * from './api/index.ts'
 export * from './oauth2.ts'
+export * from './upload-file.ts'

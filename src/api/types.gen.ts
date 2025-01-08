@@ -271,6 +271,14 @@ export type GetDocumentError = {
   message: string
 }
 
+export type CreatePendingFileUploadResponse = {
+  token: string
+}
+
+export type CreatePendingFileUploadError = {
+  message: string
+}
+
 export type GetLabelListResponse = Array<Label>
 
 export type GetLabelListError = {
@@ -373,6 +381,24 @@ export type GetPersonError = {
   message: string
 }
 
+export type UpdatePersonData = {
+  body?: {
+    name?: string
+    email?: string | null
+    image?: string | null
+    description?: string
+  }
+  path: {
+    personId: string
+  }
+}
+
+export type UpdatePersonResponse = Person
+
+export type UpdatePersonError = {
+  message: string
+}
+
 export type GetPersonByEmailData = {
   path: {
     email: string
@@ -382,23 +408,6 @@ export type GetPersonByEmailData = {
 export type GetPersonByEmailResponse = Person
 
 export type GetPersonByEmailError = {
-  message: string
-}
-
-export type UpsertPersonData = {
-  body?: {
-    name: string
-    image?: string
-    description?: string
-  }
-  path: {
-    email: string
-  }
-}
-
-export type UpsertPersonResponse = Person
-
-export type UpsertPersonError = {
   message: string
 }
 
