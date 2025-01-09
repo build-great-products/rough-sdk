@@ -13,12 +13,14 @@ npm install @roughapp/sdk
 All API requests require an Authorization header with a Bearer token. When making requests, include your API key like this:
 
 ```typescript
-import { getDocumentList } from '@roughapp/sdk'
+import { client, getDocumentList } from '@roughapp/sdk'
 
+// Option 1: use the same API key for all requests
+client.setConfig({ auth: () => 'your-api-key' })
+
+// Option 2: manually pass an API key
 const response = await getDocumentList({
-  headers: {
-    Authorization: "Bearer YOUR_API_KEY"
-  }
+    auth: 'your-api-key'
 })
 ```
 
@@ -28,13 +30,11 @@ const response = await getDocumentList({
 ```typescript
 // Get all documents
 const documents = await getDocumentList({
-  headers: { Authorization: "Bearer $API_KEY" },
   query: { includeArchived: 'false' }
 })
 
 // Get a specific document
 const document = await getDocument({
-  headers: { Authorization: "Bearer $API_KEY" },
   path: { documentId: "123" }
 })
 ```
@@ -71,6 +71,23 @@ const oauth2 = createRoughOAuth2Provider({
   clientId: 'YOUR_CLIENT_ID',
   clientSecret: 'YOUR_CLIENT_SECRET',
   redirectUri: 'YOUR_REDIRECT_URI'
+})
+```
+
+## Uploading Images
+
+```typescript
+import { createPendingTusUpload, uploadFile } from '@roughapp/sdk'
+
+const result = createPendingTusUpload()
+if (result.error || !result.data) { /* ... */ }
+const uploadToken = result.data.token
+
+const uploadId = await uploadFile({
+    uploadToken,
+    data: Buffer.from(...),
+    fileName: 'image.jpg',
+    mimeType: 'image/jpeg',
 })
 ```
 

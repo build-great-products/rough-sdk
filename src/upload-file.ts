@@ -3,12 +3,17 @@ import * as tus from 'tus-js-client'
 type UploadFileOptions = {
   tusServerUrl?: string
   uploadToken: string
-  data: File | Buffer
+  data: Buffer
   fileName: string
   mimeType: string
 }
 
-const uploadFile = (options: UploadFileOptions) => {
+type UploadResult = {
+  url: string
+  uploadId: string
+}
+
+const uploadFile = (options: UploadFileOptions): Promise<UploadResult> => {
   const {
     tusServerUrl = 'https://tus.rough.app/files/',
     uploadToken,
@@ -17,11 +22,9 @@ const uploadFile = (options: UploadFileOptions) => {
     mimeType,
   } = options
 
-  // tus-js-client supports Buffer, but the types are not correct
-  // see https://github.com/tus/tus-js-client/issues/289
-  const file = data as File
-
   return new Promise((resolve, reject) => {
+    // override the type of data to File
+    const file = data as unknown as File
     const upload = new tus.Upload(file, {
       endpoint: tusServerUrl,
       retryDelays: [0, 500, 750, 1000, 2000],
@@ -37,11 +40,18 @@ const uploadFile = (options: UploadFileOptions) => {
         reject(error)
       },
       onSuccess: () => {
-        const uploadPath = upload.url?.split('/').slice(-1).at(0)
-        if (!uploadPath) {
+        const url = upload.url
+        if (!url) {
+          throw new Error('Upload URL not found')
+        }
+        const uploadId = url.split('/').slice(-1).at(0)
+        if (!uploadId) {
           throw new Error('Upload path not found')
         }
-        resolve(uploadPath)
+        resolve({
+          url,
+          uploadId,
+        })
       },
     })
     upload.start()

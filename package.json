@@ -31,12 +31,12 @@
   },
   "devDependencies": {
     "@biomejs/biome": "1.9.4",
-    "@hey-api/openapi-ts": "0.61.0",
+    "@hey-api/openapi-ts": "0.61.1",
     "@types/node": "22.10.5",
     "@vitest/coverage-v8": "2.1.8",
     "knip": "5.41.1",
     "tsup": "8.3.5",
-    "typescript": "5.7.2",
+    "typescript": "5.7.3",
     "vite": "6.0.7",
     "vite-tsconfig-paths": "5.1.4",
     "vitest": "2.1.6"
