@@ -115,7 +115,7 @@ export type Note = {
   contentId: string
   referenceId?: string
   personId?: string
-  lastModifiedByUserId: string
+  lastModifiedByUserId?: string
   lastModifiedAt: number
 }
 
