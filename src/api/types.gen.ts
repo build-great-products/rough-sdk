@@ -1243,3 +1243,7 @@ export type GetWorkspaceResponses = {
 
 export type GetWorkspaceResponse =
   GetWorkspaceResponses[keyof GetWorkspaceResponses]
+
+export type ClientOptions = {
+  baseUrl: 'https://in.rough.app' | (string & {})
+}
