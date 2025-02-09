@@ -1,7 +1,7 @@
 {
   "name": "@roughapp/sdk",
   "version": "2.3.0",
-  "packageManager": "pnpm@9.15.3",
+  "packageManager": "pnpm@10.2.1",
   "type": "module",
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
@@ -24,22 +24,22 @@
     "openapi-ts": "node --experimental-strip-types ./openapi-ts.ts && biome format --write"
   },
   "dependencies": {
-    "@hey-api/client-fetch": "0.6.0",
+    "@hey-api/client-fetch": "0.8.1",
     "@stayradiated/error-boundary": "4.3.0",
-    "arctic": "3.1.0",
-    "tus-js-client": "4.2.3"
+    "arctic": "3.2.4",
+    "tus-js-client": "4.3.1"
   },
   "devDependencies": {
     "@biomejs/biome": "1.9.4",
-    "@hey-api/openapi-ts": "0.61.1",
-    "@types/node": "22.10.5",
-    "@vitest/coverage-v8": "2.1.8",
-    "knip": "5.41.1",
-    "tsup": "8.3.5",
+    "@hey-api/openapi-ts": "0.64.1",
+    "@types/node": "22.13.1",
+    "@vitest/coverage-v8": "3.0.5",
+    "knip": "5.43.6",
+    "tsup": "8.3.6",
     "typescript": "5.7.3",
-    "vite": "6.0.7",
+    "vite": "6.1.0",
     "vite-tsconfig-paths": "5.1.4",
-    "vitest": "2.1.6"
+    "vitest": "3.0.5"
   },
   "engines": {
     "node": "^22.9.0"
