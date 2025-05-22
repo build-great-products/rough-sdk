@@ -2,7 +2,7 @@
 
 export type Block = {
   id: string
-  index: number
+  sortOrder: number
   parentBlockId?: string
   documentId: string
   ownedByTeamId?: string
@@ -111,12 +111,14 @@ export type NoteLabel = {
 export type Note = {
   id: string
   publicId: number
+  parentNoteId?: string
   status: 'DRAFT' | 'ACTIVE' | 'INITIAL'
   contentId: string
   referenceId?: string
   personId?: string
   lastModifiedByUserId?: string
   lastModifiedAt: number
+  transcriptContentId?: string
 }
 
 export type Person = {
@@ -142,7 +144,7 @@ export type Reference = {
 export type SequenceDocument = {
   sequenceId: string
   documentId: string
-  order: number
+  sortOrder: number
 }
 
 export type Sequence = {
