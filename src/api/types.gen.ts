@@ -97,15 +97,14 @@ export type Document = {
   releasedAt?: number
 }
 
+export type ErrorMessage = {
+  message: string
+}
+
 export type Label = {
   id: string
   name: string
   color: string
-}
-
-export type NoteLabel = {
-  noteId: string
-  labelId: string
 }
 
 export type Note = {
@@ -121,11 +120,16 @@ export type Note = {
   transcriptContentId?: string
 }
 
-export type Person = {
+export type NoteLabel = {
+  noteId: string
+  labelId: string
+}
+
+export type PersonReadable = {
   id: string
   name: string
   email?: string
-  imageSet?: {
+  readonly imageSet?: {
     16: string
     32: string
     64: string
@@ -135,16 +139,17 @@ export type Person = {
   description: string
 }
 
+export type PersonWritable = {
+  id: string
+  name: string
+  email?: string
+  description: string
+}
+
 export type Reference = {
   id: string
   name: string
   url: string
-}
-
-export type SequenceDocument = {
-  sequenceId: string
-  documentId: string
-  sortOrder: number
 }
 
 export type Sequence = {
@@ -166,17 +171,30 @@ export type Sequence = {
   groupBy: 'NONE' | 'STATUS'
 }
 
-export type User = {
+export type SequenceDocument = {
+  sequenceId: string
+  documentId: string
+  sortOrder: number
+}
+
+export type UserReadable = {
   id: string
   email: string
   name?: string
-  imageSet?: {
+  readonly imageSet?: {
     16: string
     32: string
     64: string
     128: string
     256: string
   }
+  isDemoAccount: boolean
+}
+
+export type UserWritable = {
+  id: string
+  email: string
+  name?: string
   isDemoAccount: boolean
 }
 
@@ -203,21 +221,15 @@ export type GetBlockListErrors = {
   /**
    * Invalid input (path parameters, query string, or body)
    */
-  400: {
-    message: string
-  }
+  400: ErrorMessage
   /**
    * Unauthenticated
    */
-  401: {
-    message: string
-  }
+  401: ErrorMessage
   /**
    * Forbidden
    */
-  403: {
-    message: string
-  }
+  403: ErrorMessage
 }
 
 export type GetBlockListError = GetBlockListErrors[keyof GetBlockListErrors]
@@ -240,21 +252,15 @@ export type GetCommentListErrors = {
   /**
    * Invalid input (path parameters, query string, or body)
    */
-  400: {
-    message: string
-  }
+  400: ErrorMessage
   /**
    * Unauthenticated
    */
-  401: {
-    message: string
-  }
+  401: ErrorMessage
   /**
    * Forbidden
    */
-  403: {
-    message: string
-  }
+  403: ErrorMessage
 }
 
 export type GetCommentListError =
@@ -278,21 +284,15 @@ export type GetContentListErrors = {
   /**
    * Invalid input (path parameters, query string, or body)
    */
-  400: {
-    message: string
-  }
+  400: ErrorMessage
   /**
    * Unauthenticated
    */
-  401: {
-    message: string
-  }
+  401: ErrorMessage
   /**
    * Forbidden
    */
-  403: {
-    message: string
-  }
+  403: ErrorMessage
 }
 
 export type GetContentListError =
@@ -318,21 +318,15 @@ export type GetContentErrors = {
   /**
    * Invalid input (path parameters, query string, or body)
    */
-  400: {
-    message: string
-  }
+  400: ErrorMessage
   /**
    * Unauthenticated
    */
-  401: {
-    message: string
-  }
+  401: ErrorMessage
   /**
    * Forbidden
    */
-  403: {
-    message: string
-  }
+  403: ErrorMessage
 }
 
 export type GetContentError = GetContentErrors[keyof GetContentErrors]
@@ -350,7 +344,7 @@ export type GetDocumentListData = {
     /**
      * Whether to include archived documents in the list. Defaults to false.
      */
-    includeArchived?: 'true' | 'false'
+    includeArchived?: unknown
   }
   url: '/api/v1/document'
 }
@@ -359,21 +353,15 @@ export type GetDocumentListErrors = {
   /**
    * Invalid input (path parameters, query string, or body)
    */
-  400: {
-    message: string
-  }
+  400: ErrorMessage
   /**
    * Unauthenticated
    */
-  401: {
-    message: string
-  }
+  401: ErrorMessage
   /**
    * Forbidden
    */
-  403: {
-    message: string
-  }
+  403: ErrorMessage
 }
 
 export type GetDocumentListError =
@@ -399,21 +387,15 @@ export type GetDocumentErrors = {
   /**
    * Invalid input (path parameters, query string, or body)
    */
-  400: {
-    message: string
-  }
+  400: ErrorMessage
   /**
    * Unauthenticated
    */
-  401: {
-    message: string
-  }
+  401: ErrorMessage
   /**
    * Forbidden
    */
-  403: {
-    message: string
-  }
+  403: ErrorMessage
 }
 
 export type GetDocumentError = GetDocumentErrors[keyof GetDocumentErrors]
@@ -436,21 +418,15 @@ export type CreatePendingFileUploadErrors = {
   /**
    * Invalid input (path parameters, query string, or body)
    */
-  400: {
-    message: string
-  }
+  400: ErrorMessage
   /**
    * Unauthenticated
    */
-  401: {
-    message: string
-  }
+  401: ErrorMessage
   /**
    * Forbidden
    */
-  403: {
-    message: string
-  }
+  403: ErrorMessage
 }
 
 export type CreatePendingFileUploadError =
@@ -476,21 +452,15 @@ export type GetLabelListErrors = {
   /**
    * Invalid input (path parameters, query string, or body)
    */
-  400: {
-    message: string
-  }
+  400: ErrorMessage
   /**
    * Unauthenticated
    */
-  401: {
-    message: string
-  }
+  401: ErrorMessage
   /**
    * Forbidden
    */
-  403: {
-    message: string
-  }
+  403: ErrorMessage
 }
 
 export type GetLabelListError = GetLabelListErrors[keyof GetLabelListErrors]
@@ -513,21 +483,15 @@ export type GetNoteLabelListErrors = {
   /**
    * Invalid input (path parameters, query string, or body)
    */
-  400: {
-    message: string
-  }
+  400: ErrorMessage
   /**
    * Unauthenticated
    */
-  401: {
-    message: string
-  }
+  401: ErrorMessage
   /**
    * Forbidden
    */
-  403: {
-    message: string
-  }
+  403: ErrorMessage
 }
 
 export type GetNoteLabelListError =
@@ -551,21 +515,15 @@ export type GetNoteListErrors = {
   /**
    * Invalid input (path parameters, query string, or body)
    */
-  400: {
-    message: string
-  }
+  400: ErrorMessage
   /**
    * Unauthenticated
    */
-  401: {
-    message: string
-  }
+  401: ErrorMessage
   /**
    * Forbidden
    */
-  403: {
-    message: string
-  }
+  403: ErrorMessage
 }
 
 export type GetNoteListError = GetNoteListErrors[keyof GetNoteListErrors]
@@ -595,21 +553,15 @@ export type CreateNoteErrors = {
   /**
    * Invalid input (path parameters, query string, or body)
    */
-  400: {
-    message: string
-  }
+  400: ErrorMessage
   /**
    * Unauthenticated
    */
-  401: {
-    message: string
-  }
+  401: ErrorMessage
   /**
    * Forbidden
    */
-  403: {
-    message: string
-  }
+  403: ErrorMessage
 }
 
 export type CreateNoteError = CreateNoteErrors[keyof CreateNoteErrors]
@@ -633,34 +585,26 @@ export type DeleteNoteErrors = {
   /**
    * Invalid input (path parameters, query string, or body)
    */
-  400: {
-    message: string
-  }
+  400: ErrorMessage
   /**
    * Unauthenticated
    */
-  401: {
-    message: string
-  }
+  401: ErrorMessage
   /**
    * Forbidden
    */
-  403: {
-    message: string
-  }
+  403: ErrorMessage
   /**
    * Not found
    */
-  404: {
-    message: string
-  }
+  404: ErrorMessage
 }
 
 export type DeleteNoteError = DeleteNoteErrors[keyof DeleteNoteErrors]
 
 export type DeleteNoteResponses = {
   200: {
-    [key: string]: unknown
+    [key: string]: never
   }
 }
 
@@ -679,21 +623,15 @@ export type GetNoteErrors = {
   /**
    * Invalid input (path parameters, query string, or body)
    */
-  400: {
-    message: string
-  }
+  400: ErrorMessage
   /**
    * Unauthenticated
    */
-  401: {
-    message: string
-  }
+  401: ErrorMessage
   /**
    * Forbidden
    */
-  403: {
-    message: string
-  }
+  403: ErrorMessage
 }
 
 export type GetNoteError = GetNoteErrors[keyof GetNoteErrors]
@@ -719,27 +657,21 @@ export type GetPersonListErrors = {
   /**
    * Invalid input (path parameters, query string, or body)
    */
-  400: {
-    message: string
-  }
+  400: ErrorMessage
   /**
    * Unauthenticated
    */
-  401: {
-    message: string
-  }
+  401: ErrorMessage
   /**
    * Unauthorized
    */
-  403: {
-    message: string
-  }
+  403: ErrorMessage
 }
 
 export type GetPersonListError = GetPersonListErrors[keyof GetPersonListErrors]
 
 export type GetPersonListResponses = {
-  200: Array<Person>
+  200: Array<PersonReadable>
 }
 
 export type GetPersonListResponse =
@@ -761,33 +693,25 @@ export type CreatePersonErrors = {
   /**
    * Invalid input (path parameters, query string, or body)
    */
-  400: {
-    message: string
-  }
+  400: ErrorMessage
   /**
    * Unauthenticated
    */
-  401: {
-    message: string
-  }
+  401: ErrorMessage
   /**
    * Unauthorized
    */
-  403: {
-    message: string
-  }
+  403: ErrorMessage
   /**
    * Person with email already exists
    */
-  409: {
-    message: string
-  }
+  409: ErrorMessage
 }
 
 export type CreatePersonError = CreatePersonErrors[keyof CreatePersonErrors]
 
 export type CreatePersonResponses = {
-  200: Person
+  200: PersonReadable
 }
 
 export type CreatePersonResponse =
@@ -806,33 +730,25 @@ export type GetPersonErrors = {
   /**
    * Invalid input (path parameters, query string, or body)
    */
-  400: {
-    message: string
-  }
+  400: ErrorMessage
   /**
    * Unauthenticated
    */
-  401: {
-    message: string
-  }
+  401: ErrorMessage
   /**
    * Unauthorized
    */
-  403: {
-    message: string
-  }
+  403: ErrorMessage
   /**
    * Person not found
    */
-  404: {
-    message: string
-  }
+  404: ErrorMessage
 }
 
 export type GetPersonError = GetPersonErrors[keyof GetPersonErrors]
 
 export type GetPersonResponses = {
-  200: Person
+  200: PersonReadable
 }
 
 export type GetPersonResponse = GetPersonResponses[keyof GetPersonResponses]
@@ -840,8 +756,8 @@ export type GetPersonResponse = GetPersonResponses[keyof GetPersonResponses]
 export type UpdatePersonData = {
   body?: {
     name?: string
-    email?: string | null
-    image?: string | null
+    email?: string | unknown
+    image?: string | unknown
     description?: string
   }
   path: {
@@ -855,33 +771,25 @@ export type UpdatePersonErrors = {
   /**
    * Invalid input (path parameters, query string, or body)
    */
-  400: {
-    message: string
-  }
+  400: ErrorMessage
   /**
    * Unauthenticated
    */
-  401: {
-    message: string
-  }
+  401: ErrorMessage
   /**
    * Unauthorized
    */
-  403: {
-    message: string
-  }
+  403: ErrorMessage
   /**
    * Person not found
    */
-  404: {
-    message: string
-  }
+  404: ErrorMessage
 }
 
 export type UpdatePersonError = UpdatePersonErrors[keyof UpdatePersonErrors]
 
 export type UpdatePersonResponses = {
-  200: Person
+  200: PersonReadable
 }
 
 export type UpdatePersonResponse =
@@ -900,34 +808,26 @@ export type GetPersonByEmailErrors = {
   /**
    * Invalid input (path parameters, query string, or body)
    */
-  400: {
-    message: string
-  }
+  400: ErrorMessage
   /**
    * Unauthenticated
    */
-  401: {
-    message: string
-  }
+  401: ErrorMessage
   /**
    * Forbidden
    */
-  403: {
-    message: string
-  }
+  403: ErrorMessage
   /**
    * Not Found
    */
-  404: {
-    message: string
-  }
+  404: ErrorMessage
 }
 
 export type GetPersonByEmailError =
   GetPersonByEmailErrors[keyof GetPersonByEmailErrors]
 
 export type GetPersonByEmailResponses = {
-  200: Person
+  200: PersonReadable
 }
 
 export type GetPersonByEmailResponse =
@@ -944,21 +844,15 @@ export type GetReferenceListErrors = {
   /**
    * Invalid input (path parameters, query string, or body)
    */
-  400: {
-    message: string
-  }
+  400: ErrorMessage
   /**
    * Unauthenticated
    */
-  401: {
-    message: string
-  }
+  401: ErrorMessage
   /**
    * Forbidden
    */
-  403: {
-    message: string
-  }
+  403: ErrorMessage
 }
 
 export type GetReferenceListError =
@@ -985,21 +879,15 @@ export type CreateReferenceErrors = {
   /**
    * Bad Request
    */
-  400: {
-    message: string
-  }
+  400: ErrorMessage
   /**
    * Unauthenticated
    */
-  401: {
-    message: string
-  }
+  401: ErrorMessage
   /**
    * Forbidden
    */
-  403: {
-    message: string
-  }
+  403: ErrorMessage
 }
 
 export type CreateReferenceError =
@@ -1023,21 +911,15 @@ export type GetSequenceDocumentListErrors = {
   /**
    * Invalid input (path parameters, query string, or body)
    */
-  400: {
-    message: string
-  }
+  400: ErrorMessage
   /**
    * Unauthenticated
    */
-  401: {
-    message: string
-  }
+  401: ErrorMessage
   /**
    * Forbidden
    */
-  403: {
-    message: string
-  }
+  403: ErrorMessage
 }
 
 export type GetSequenceDocumentListError =
@@ -1061,21 +943,15 @@ export type GetSequenceListErrors = {
   /**
    * Invalid input (path parameters, query string, or body)
    */
-  400: {
-    message: string
-  }
+  400: ErrorMessage
   /**
    * Unauthenticated
    */
-  401: {
-    message: string
-  }
+  401: ErrorMessage
   /**
    * Forbidden
    */
-  403: {
-    message: string
-  }
+  403: ErrorMessage
 }
 
 export type GetSequenceListError =
@@ -1099,27 +975,21 @@ export type GetUserListErrors = {
   /**
    * Invalid input (path parameters, query string, or body)
    */
-  400: {
-    message: string
-  }
+  400: ErrorMessage
   /**
    * Unauthenticated
    */
-  401: {
-    message: string
-  }
+  401: ErrorMessage
   /**
    * Forbidden
    */
-  403: {
-    message: string
-  }
+  403: ErrorMessage
 }
 
 export type GetUserListError = GetUserListErrors[keyof GetUserListErrors]
 
 export type GetUserListResponses = {
-  200: Array<User>
+  200: Array<UserReadable>
 }
 
 export type GetUserListResponse =
@@ -1140,27 +1010,21 @@ export type CreateUserErrors = {
   /**
    * Invalid input (path parameters, query string, or body)
    */
-  400: {
-    message: string
-  }
+  400: ErrorMessage
   /**
    * Unauthenticated
    */
-  401: {
-    message: string
-  }
+  401: ErrorMessage
   /**
    * Forbidden
    */
-  403: {
-    message: string
-  }
+  403: ErrorMessage
 }
 
 export type CreateUserError = CreateUserErrors[keyof CreateUserErrors]
 
 export type CreateUserResponses = {
-  200: User
+  200: UserReadable
 }
 
 export type CreateUserResponse = CreateUserResponses[keyof CreateUserResponses]
@@ -1168,7 +1032,7 @@ export type CreateUserResponse = CreateUserResponses[keyof CreateUserResponses]
 export type GetUserData = {
   body?: never
   path: {
-    userId: 'current' | string
+    userId: unknown | string
   }
   query?: never
   url: '/api/v1/user/{userId}'
@@ -1178,33 +1042,25 @@ export type GetUserErrors = {
   /**
    * Invalid input (path parameters, query string, or body)
    */
-  400: {
-    message: string
-  }
+  400: ErrorMessage
   /**
    * Unauthenticated
    */
-  401: {
-    message: string
-  }
+  401: ErrorMessage
   /**
    * Forbidden
    */
-  403: {
-    message: string
-  }
+  403: ErrorMessage
   /**
    * User not found
    */
-  404: {
-    message: string
-  }
+  404: ErrorMessage
 }
 
 export type GetUserError = GetUserErrors[keyof GetUserErrors]
 
 export type GetUserResponses = {
-  200: User
+  200: UserReadable
 }
 
 export type GetUserResponse = GetUserResponses[keyof GetUserResponses]
@@ -1220,21 +1076,15 @@ export type GetWorkspaceErrors = {
   /**
    * Invalid input (path parameters, query string, or body)
    */
-  400: {
-    message: string
-  }
+  400: ErrorMessage
   /**
    * Unauthenticated
    */
-  401: {
-    message: string
-  }
+  401: ErrorMessage
   /**
    * Unauthorized
    */
-  403: {
-    message: string
-  }
+  403: ErrorMessage
 }
 
 export type GetWorkspaceError = GetWorkspaceErrors[keyof GetWorkspaceErrors]
