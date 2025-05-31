@@ -1,6 +1,6 @@
 {
   "name": "@roughapp/sdk",
-  "version": "2.5.0",
+  "version": "2.6.0",
   "packageManager": "pnpm@10.11.0",
   "type": "module",
   "main": "./dist/index.js",
@@ -45,9 +45,13 @@
     "node": ">=22.9.0"
   },
   "pnpm": {
-    "onlyBuiltDependencies": ["esbuild"]
+    "onlyBuiltDependencies": [
+      "esbuild"
+    ]
   },
   "knip": {
-    "ignore": ["openapi-ts.ts"]
+    "ignore": [
+      "openapi-ts.ts"
+    ]
   }
 }
