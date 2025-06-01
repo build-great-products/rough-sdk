@@ -21,7 +21,7 @@
     "check": "tsc --noEmit",
     "build": "tsup",
     "prepublish": "tsup",
-    "openapi-ts": "node --experimental-strip-types ./openapi-ts.ts && biome format --write"
+    "openapi-ts": "node --experimental-strip-types ./openapi-ts.ts && ${npm_execpath:-pnpm} run tidy"
   },
   "dependencies": {
     "@hey-api/client-fetch": "0.11.0",
@@ -45,13 +45,9 @@
     "node": ">=22.9.0"
   },
   "pnpm": {
-    "onlyBuiltDependencies": [
-      "esbuild"
-    ]
+    "onlyBuiltDependencies": ["esbuild"]
   },
   "knip": {
-    "ignore": [
-      "openapi-ts.ts"
-    ]
+    "ignore": ["openapi-ts.ts"]
   }
 }
