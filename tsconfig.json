@@ -5,7 +5,7 @@
     "rootDir": ".",
 
     // Enable latest features
-    "lib": ["ESNext"],
+    "lib": ["DOM", "ESNext"],
     "target": "ESNext",
     "module": "ESNext",
     "moduleDetection": "force",

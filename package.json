@@ -21,25 +21,25 @@
     "check": "tsc --noEmit",
     "build": "tsup",
     "prepublish": "tsup",
-    "openapi-ts": "node --experimental-strip-types ./openapi-ts.ts && ${npm_execpath:-pnpm} run tidy"
+    "openapi-ts": "node ./openapi-ts.ts && ${npm_execpath:-pnpm} run tidy"
   },
   "dependencies": {
-    "@hey-api/client-fetch": "0.11.0",
+    "@hey-api/client-fetch": "0.13.1",
     "@stayradiated/error-boundary": "4.3.0",
     "arctic": "3.7.0",
     "tus-js-client": "4.3.1"
   },
   "devDependencies": {
-    "@biomejs/biome": "1.9.4",
-    "@hey-api/openapi-ts": "0.69.1",
-    "@types/node": "22.15.29",
-    "@vitest/coverage-v8": "3.1.4",
-    "knip": "5.59.1",
+    "@biomejs/biome": "2.3.2",
+    "@hey-api/openapi-ts": "0.86.8",
+    "@types/node": "24.9.2",
+    "@vitest/coverage-v8": "4.0.5",
+    "knip": "5.66.4",
     "tsup": "8.5.0",
-    "typescript": "5.8.3",
-    "vite": "6.3.5",
+    "typescript": "5.9.3",
+    "vite": "7.1.12",
     "vite-tsconfig-paths": "5.1.4",
-    "vitest": "3.1.4"
+    "vitest": "4.0.5"
   },
   "engines": {
     "node": ">=22.9.0"
@@ -51,7 +51,10 @@
   },
   "knip": {
     "ignore": [
-      "openapi-ts.ts"
+      "src/api/**"
+    ],
+    "ignoreDependencies": [
+      "@hey-api/client-fetch"
     ]
   }
 }
