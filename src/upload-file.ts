@@ -9,8 +9,7 @@ type UploadFileOptions = {
 }
 
 type UploadResult = {
-  url: string
-  uploadId: string
+  key: string
 }
 
 const uploadFile = (options: UploadFileOptions): Promise<UploadResult> => {
@@ -26,6 +25,9 @@ const uploadFile = (options: UploadFileOptions): Promise<UploadResult> => {
     // override the type of data to File
     const file = data as unknown as File
     const upload = new tus.Upload(file, {
+      // create a new file for each upload
+      removeFingerprintOnSuccess: true,
+
       endpoint: tusServerUrl,
       retryDelays: [0, 500, 750, 1000, 2000],
       metadata: {
@@ -40,20 +42,23 @@ const uploadFile = (options: UploadFileOptions): Promise<UploadResult> => {
         reject(error)
       },
       onSuccess: () => {
-        const url = upload.url
-        if (!url) {
-          throw new Error('Upload URL not found')
-        }
-        const uploadId = url.split('/').slice(-1).at(0)
-        if (!uploadId) {
-          throw new Error('Upload path not found')
+        // The upload has finished successfully, now we can get the file URL
+        // and key from the upload object.
+        //
+        // An example URL might look like this:
+        //   "https://tus.rough.app/files/44547016373871b5e4aaf1ae716cca8a+NJ6wFr2x_ARQLSYLR4LcAUIrPk2ePCetFlwN4iwZrw.sA0_nrZlUAlWmoL7Q7UMtH97xTAhXU3Yqim91Am60vPvOZr3PA.6YifZbXvEKhzANK5twV2YqFjCs9BloQo5ioKV5Tz.qmONs2it_NrP6Xw--"
+        // In this example the key is "44547016373871b5e4aaf1ae716cca8a"
+        // View this example in the playground: https://regex101.com/r/04RdbD/2
+        const key = upload.url?.match(/\/([^/+\s]+)(?:\+[^/\s]+)?$/)?.at(1)
+        if (!key) {
+          throw new Error('Upload key not found')
         }
         resolve({
-          url,
-          uploadId,
+          key,
         })
       },
     })
+
     upload.start()
   })
 }

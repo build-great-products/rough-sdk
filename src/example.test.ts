@@ -39,15 +39,15 @@ describe('File Upload', () => {
     })
     const uploadToken = result.data?.token ?? ''
 
-    const { uploadId } = await uploadFile({
+    const { key } = await uploadFile({
       tusServerUrl: 'http://localhost:8080/files/',
       uploadToken,
       data: Buffer.from('Hello, World!'),
       fileName: 'hello.txt',
       mimeType: 'text/plain',
     })
-    expect(uploadId).toBeTypeOf('string')
-    expect(uploadId).toHaveLength(32)
-    console.log('Upload ID:', uploadId)
+    expect(key).toBeTypeOf('string')
+    expect(key).toHaveLength(32)
+    console.log('Upload ID:', key)
   })
 })

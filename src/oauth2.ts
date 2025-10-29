@@ -135,4 +135,4 @@ export type { RoughOAuth2Provider }
  * Ensure that consumers of this library can access the same error class
  * that is used in the arctic library.
  */
-export { OAuth2RequestError, generateCodeVerifier, generateState } from 'arctic'
+export { generateCodeVerifier, generateState, OAuth2RequestError } from 'arctic'
