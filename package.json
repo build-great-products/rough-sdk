@@ -56,5 +56,10 @@
     "ignoreDependencies": [
       "@hey-api/client-fetch"
     ]
-  }
+  },
+  "files": [
+    "package.json",
+    "dist",
+    "README.md"
+  ]
 }
