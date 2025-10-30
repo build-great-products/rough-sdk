@@ -2,7 +2,7 @@
 
 import type { Client, Options as Options2, TDataShape } from './client';
 import { client } from './client.gen';
-import type { CreateNoteData, CreateNoteErrors, CreateNoteResponses, CreatePendingFileUploadData, CreatePendingFileUploadErrors, CreatePendingFileUploadResponses, CreatePersonData, CreatePersonErrors, CreatePersonResponses, CreateReferenceData, CreateReferenceErrors, CreateReferenceResponses, CreateUserData, CreateUserErrors, CreateUserResponses, DeleteNoteData, DeleteNoteErrors, DeleteNoteResponses, GetBlockListData, GetBlockListErrors, GetBlockListResponses, GetCommentListData, GetCommentListErrors, GetCommentListResponses, GetContentData, GetContentErrors, GetContentListData, GetContentListErrors, GetContentListResponses, GetContentResponses, GetDocumentData, GetDocumentErrors, GetDocumentListData, GetDocumentListErrors, GetDocumentListResponses, GetDocumentResponses, GetLabelListData, GetLabelListErrors, GetLabelListResponses, GetNoteData, GetNoteErrors, GetNoteLabelListData, GetNoteLabelListErrors, GetNoteLabelListResponses, GetNoteListData, GetNoteListErrors, GetNoteListResponses, GetNoteResponses, GetPersonByEmailData, GetPersonByEmailErrors, GetPersonByEmailResponses, GetPersonData, GetPersonErrors, GetPersonListData, GetPersonListErrors, GetPersonListResponses, GetPersonResponses, GetReferenceListData, GetReferenceListErrors, GetReferenceListResponses, GetSequenceDocumentListData, GetSequenceDocumentListErrors, GetSequenceDocumentListResponses, GetSequenceListData, GetSequenceListErrors, GetSequenceListResponses, GetUserData, GetUserErrors, GetUserListData, GetUserListErrors, GetUserListResponses, GetUserResponses, GetWorkspaceData, GetWorkspaceErrors, GetWorkspaceResponses, UpdatePersonData, UpdatePersonErrors, UpdatePersonResponses } from './types.gen';
+import type { CreateNoteData, CreateNoteErrors, CreateNoteResponses, CreatePendingFileUploadData, CreatePendingFileUploadErrors, CreatePendingFileUploadResponses, CreatePersonData, CreatePersonErrors, CreatePersonResponses, CreateReferenceData, CreateReferenceErrors, CreateReferenceResponses, CreateUserData, CreateUserErrors, CreateUserResponses, DeleteNoteData, DeleteNoteErrors, DeleteNoteResponses, GetBlockListData, GetBlockListErrors, GetBlockListResponses, GetCommentListData, GetCommentListErrors, GetCommentListResponses, GetContentData, GetContentErrors, GetContentListData, GetContentListErrors, GetContentListResponses, GetContentResponses, GetDocumentData, GetDocumentErrors, GetDocumentListData, GetDocumentListErrors, GetDocumentListResponses, GetDocumentResponses, GetImageData, GetImageErrors, GetImageResponses, GetLabelListData, GetLabelListErrors, GetLabelListResponses, GetNoteData, GetNoteErrors, GetNoteLabelListData, GetNoteLabelListErrors, GetNoteLabelListResponses, GetNoteListData, GetNoteListErrors, GetNoteListResponses, GetNoteResponses, GetPersonByEmailData, GetPersonByEmailErrors, GetPersonByEmailResponses, GetPersonData, GetPersonErrors, GetPersonListData, GetPersonListErrors, GetPersonListResponses, GetPersonResponses, GetReferenceListData, GetReferenceListErrors, GetReferenceListResponses, GetSequenceDocumentListData, GetSequenceDocumentListErrors, GetSequenceDocumentListResponses, GetSequenceListData, GetSequenceListErrors, GetSequenceListResponses, GetUserData, GetUserErrors, GetUserListData, GetUserListErrors, GetUserListResponses, GetUserResponses, GetWorkspaceData, GetWorkspaceErrors, GetWorkspaceResponses, UpdatePersonData, UpdatePersonErrors, UpdatePersonResponses } from './types.gen';
 
 export type Options<TData extends TDataShape = TDataShape, ThrowOnError extends boolean = boolean> = Options2<TData, ThrowOnError> & {
     /**
@@ -140,6 +140,24 @@ export const createPendingFileUpload = <ThrowOnError extends boolean = false>(op
             }
         ],
         url: '/api/v1/file-upload',
+        ...options
+    });
+};
+
+/**
+ * Get image
+ *
+ * Get an image
+ */
+export const getImage = <ThrowOnError extends boolean = false>(options: Options<GetImageData, ThrowOnError>) => {
+    return (options.client ?? client).get<GetImageResponses, GetImageErrors, ThrowOnError>({
+        security: [
+            {
+                scheme: 'bearer',
+                type: 'http'
+            }
+        ],
+        url: '/api/v1/image',
         ...options
     });
 };

@@ -141,6 +141,18 @@ export type FileUpload = {
     token: string;
 };
 
+export type Image = {
+    path: string;
+    signedUrl: string;
+    readonly imageSet: {
+        16: string;
+        32: string;
+        64: string;
+        128: string;
+        256: string;
+    };
+};
+
 export type Label = {
     id: string;
     name: string;
@@ -259,6 +271,11 @@ export type Workspace = {
 
 export type DeleteNoteOutputWritable = {
     [key: string]: never;
+};
+
+export type ImageWritable = {
+    path: string;
+    signedUrl: string;
 };
 
 export type PersonWritable = {
@@ -510,6 +527,39 @@ export type CreatePendingFileUploadResponses = {
 };
 
 export type CreatePendingFileUploadResponse = CreatePendingFileUploadResponses[keyof CreatePendingFileUploadResponses];
+
+export type GetImageData = {
+    body?: never;
+    path?: never;
+    query: {
+        key: string;
+        width?: number;
+    };
+    url: '/api/v1/image';
+};
+
+export type GetImageErrors = {
+    /**
+     * Invalid input (path parameters, query string, or body)
+     */
+    400: ErrorMessage;
+    /**
+     * Unauthenticated
+     */
+    401: ErrorMessage;
+    /**
+     * Forbidden
+     */
+    403: ErrorMessage;
+};
+
+export type GetImageError = GetImageErrors[keyof GetImageErrors];
+
+export type GetImageResponses = {
+    200: Image;
+};
+
+export type GetImageResponse = GetImageResponses[keyof GetImageResponses];
 
 export type GetLabelListData = {
     body?: never;
