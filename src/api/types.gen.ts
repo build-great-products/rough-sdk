@@ -4,6 +4,25 @@ export type ClientOptions = {
     baseUrl: 'https://in.rough.app' | (string & {});
 };
 
+export type Asset = {
+    id: string;
+    scope: 'WORKSPACE' | 'USER';
+    userId: string;
+    workspaceId?: string;
+    storageKey: string;
+    status: 'PENDING' | 'UPLOADING' | 'READY' | 'ERROR';
+    type: 'IMAGE' | 'VIDEO' | 'AUDIO' | 'OTHER';
+    mimeType: string;
+    originalFileName: string;
+    metadata: {
+        [key: string]: unknown;
+    };
+    byteSize: number;
+    tusUploadToken: string | unknown;
+    url: string;
+    thumbUrl: string | unknown;
+};
+
 export type Block = {
     id: string;
     sortOrder: number;
@@ -48,6 +67,33 @@ export type Content = {
 };
 
 export type ContentList = Array<Content>;
+
+export type CreateAssetInput = {
+    originalFileName: string;
+    mimeType: string;
+    metadata: {
+        [key: string]: string | number | boolean;
+    };
+};
+
+export type CreateAssetOutput = {
+    id: string;
+    scope: 'WORKSPACE' | 'USER';
+    userId: string;
+    workspaceId?: string;
+    storageKey: string;
+    status: 'PENDING' | 'UPLOADING' | 'READY' | 'ERROR';
+    type: 'IMAGE' | 'VIDEO' | 'AUDIO' | 'OTHER';
+    mimeType: string;
+    originalFileName: string;
+    metadata: {
+        [key: string]: unknown;
+    };
+    byteSize: number;
+    tusUploadToken: string;
+    url: string;
+    thumbUrl: string | unknown;
+};
 
 export type CreateNoteInput = {
     createdByUserId: string;
@@ -135,22 +181,6 @@ export type DocumentList = Array<Document>;
 
 export type ErrorMessage = {
     message: string;
-};
-
-export type FileUpload = {
-    token: string;
-};
-
-export type Image = {
-    path: string;
-    signedUrl: string;
-    readonly imageSet: {
-        16: string;
-        32: string;
-        64: string;
-        128: string;
-        256: string;
-    };
 };
 
 export type Label = {
@@ -273,11 +303,6 @@ export type DeleteNoteOutputWritable = {
     [key: string]: never;
 };
 
-export type ImageWritable = {
-    path: string;
-    signedUrl: string;
-};
-
 export type PersonWritable = {
     id: string;
     name: string;
@@ -302,6 +327,36 @@ export type UserWritable = {
 };
 
 export type UserListWritable = Array<UserWritable>;
+
+export type CreatePendingAssetData = {
+    body?: CreateAssetInput;
+    path?: never;
+    query?: never;
+    url: '/api/v1/asset';
+};
+
+export type CreatePendingAssetErrors = {
+    /**
+     * Invalid input (path parameters, query string, or body)
+     */
+    400: ErrorMessage;
+    /**
+     * Unauthenticated
+     */
+    401: ErrorMessage;
+    /**
+     * Forbidden
+     */
+    403: ErrorMessage;
+};
+
+export type CreatePendingAssetError = CreatePendingAssetErrors[keyof CreatePendingAssetErrors];
+
+export type CreatePendingAssetResponses = {
+    200: CreateAssetOutput;
+};
+
+export type CreatePendingAssetResponse = CreatePendingAssetResponses[keyof CreatePendingAssetResponses];
 
 export type GetBlockListData = {
     body?: never;
@@ -497,69 +552,6 @@ export type GetDocumentResponses = {
 };
 
 export type GetDocumentResponse = GetDocumentResponses[keyof GetDocumentResponses];
-
-export type CreatePendingFileUploadData = {
-    body?: never;
-    path?: never;
-    query?: never;
-    url: '/api/v1/file-upload';
-};
-
-export type CreatePendingFileUploadErrors = {
-    /**
-     * Invalid input (path parameters, query string, or body)
-     */
-    400: ErrorMessage;
-    /**
-     * Unauthenticated
-     */
-    401: ErrorMessage;
-    /**
-     * Forbidden
-     */
-    403: ErrorMessage;
-};
-
-export type CreatePendingFileUploadError = CreatePendingFileUploadErrors[keyof CreatePendingFileUploadErrors];
-
-export type CreatePendingFileUploadResponses = {
-    200: FileUpload;
-};
-
-export type CreatePendingFileUploadResponse = CreatePendingFileUploadResponses[keyof CreatePendingFileUploadResponses];
-
-export type GetImageData = {
-    body?: never;
-    path?: never;
-    query: {
-        key: string;
-        width?: number;
-    };
-    url: '/api/v1/image';
-};
-
-export type GetImageErrors = {
-    /**
-     * Invalid input (path parameters, query string, or body)
-     */
-    400: ErrorMessage;
-    /**
-     * Unauthenticated
-     */
-    401: ErrorMessage;
-    /**
-     * Forbidden
-     */
-    403: ErrorMessage;
-};
-
-export type GetImageError = GetImageErrors[keyof GetImageErrors];
-
-export type GetImageResponses = {
-    200: Image;
-};
-
-export type GetImageResponse = GetImageResponses[keyof GetImageResponses];
 
 export type GetLabelListData = {
     body?: never;

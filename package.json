@@ -1,6 +1,6 @@
 {
   "name": "@roughapp/sdk",
-  "version": "2.9.0",
+  "version": "3.0.0",
   "packageManager": "pnpm@10.11.0",
   "type": "module",
   "main": "./dist/index.js",
@@ -30,16 +30,18 @@
     "tus-js-client": "4.3.1"
   },
   "devDependencies": {
-    "@biomejs/biome": "2.3.2",
-    "@hey-api/openapi-ts": "0.86.8",
-    "@types/node": "24.9.2",
-    "@vitest/coverage-v8": "4.0.5",
-    "knip": "5.66.4",
-    "tsup": "8.5.0",
+    "@biomejs/biome": "2.3.6",
+    "@hey-api/openapi-ts": "0.87.5",
+    "@types/node": "24.10.1",
+    "@vitest/coverage-v8": "4.0.10",
+    "knip": "5.69.1",
+    "test-fixture-factory": "2.1.0",
+    "tsup": "8.5.1",
     "typescript": "5.9.3",
-    "vite": "7.1.12",
+    "undici": "7.16.0",
+    "vite": "7.2.2",
     "vite-tsconfig-paths": "5.1.4",
-    "vitest": "4.0.5"
+    "vitest": "4.0.10"
   },
   "engines": {
     "node": ">=22.9.0"

@@ -1,53 +1,117 @@
-import * as process from 'node:process'
-import { describe, test } from 'vitest'
+import { test as anyTest, describe } from 'vitest'
+import { client, createPendingAsset, getWorkspace } from './index.ts'
+import { useGlobalAgent } from './test/use-global-agent.ts'
 
-import {
-  client,
-  createPendingFileUpload,
-  getWorkspace,
-  uploadFile,
-} from './index.ts'
+const MOCK_ROUGH_BASE_URL = 'https://mock.rough.app.localhost'
+const ROUGH_API_KEY = 'mock-rough-api-key'
 
-const ROUGH_URL = process.env.ROUGH_URL
-const ROUGH_API_KEY = process.env.ROUGH_API_KEY
+const test = anyTest.extend({
+  agent: useGlobalAgent({ origin: MOCK_ROUGH_BASE_URL }),
+})
 
 client.setConfig({
-  baseUrl: ROUGH_URL,
+  baseUrl: MOCK_ROUGH_BASE_URL,
   auth: () => ROUGH_API_KEY,
 })
 
 describe('getWorkspace', () => {
-  test('should get current workspace', async ({ expect }) => {
+  test('should get current workspace', async ({ expect, agent }) => {
+    agent
+      .intercept({
+        method: 'GET',
+        path: '/api/v1/workspace/current',
+      })
+      .reply(
+        200,
+        JSON.stringify({
+          id: 'mock-workspace-id',
+        }),
+        {
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        },
+      )
+
     const result = await getWorkspace()
-    expect(result.error).toBeUndefined()
-    expect(result).toMatchObject({
+
+    expect(result).toStrictEqual({
+      request: expect.any(Object),
+      response: expect.any(Object),
       data: {
-        id: expect.any(String),
+        id: 'mock-workspace-id',
+      },
+    })
+  })
+
+  test('should return error if request fails', async ({ expect, agent }) => {
+    agent
+      .intercept({
+        method: 'GET',
+        path: '/api/v1/workspace/current',
+      })
+      .reply(
+        500,
+        JSON.stringify({
+          message: 'Internal Server Error',
+        }),
+        {
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        },
+      )
+
+    const result = await getWorkspace()
+
+    expect(result).toStrictEqual({
+      request: expect.any(Object),
+      response: expect.any(Object),
+      error: {
+        message: 'Internal Server Error',
       },
     })
   })
 })
 
 describe('File Upload', () => {
-  test('should create a pending upload', async ({ expect }) => {
-    const result = await createPendingFileUpload()
-    expect(result.error).toBeUndefined()
-    expect(result).toMatchObject({
-      data: {
-        token: expect.any(String),
+  test('should create a pending upload', async ({ expect, agent }) => {
+    agent
+      .intercept({
+        method: 'POST',
+        path: '/api/v1/asset',
+      })
+      .reply(
+        200,
+        JSON.stringify({
+          url: 'http://localhost:8080/files/mock-upload-token',
+          tusUploadToken: 'mock-upload-token',
+        }),
+        {
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        },
+      )
+
+    const result = await createPendingAsset({
+      body: {
+        originalFileName: 'test.png',
+        mimeType: 'image/png',
+        metadata: {
+          foo: 'bar',
+          baz: 'qux',
+        },
       },
     })
-    const uploadToken = result.data?.token ?? ''
 
-    const { key } = await uploadFile({
-      tusServerUrl: 'http://localhost:8080/files/',
-      uploadToken,
-      data: Buffer.from('Hello, World!'),
-      fileName: 'hello.txt',
-      mimeType: 'text/plain',
+    expect(result).toStrictEqual({
+      request: expect.any(Object),
+      response: expect.any(Object),
+      data: {
+        url: 'http://localhost:8080/files/mock-upload-token',
+        tusUploadToken: 'mock-upload-token',
+      },
     })
-    expect(key).toBeTypeOf('string')
-    expect(key).toHaveLength(32)
-    console.log('Upload ID:', key)
   })
 })
