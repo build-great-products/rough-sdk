@@ -1,5 +1,5 @@
 import { test as anyTest, describe } from 'vitest'
-import { client, createPendingAsset, getWorkspace } from './index.ts'
+import { client, createAsset, getWorkspace } from './index.ts'
 import { useGlobalAgent } from './test/use-global-agent.ts'
 
 const MOCK_ROUGH_BASE_URL = 'https://mock.rough.app.localhost'
@@ -94,14 +94,9 @@ describe('File Upload', () => {
         },
       )
 
-    const result = await createPendingAsset({
+    const result = await createAsset({
       body: {
-        originalFileName: 'test.png',
-        mimeType: 'image/png',
-        metadata: {
-          foo: 'bar',
-          baz: 'qux',
-        },
+        file: new File(['hello world'], 'hello.txt', { type: 'text/plain' }),
       },
     })
 

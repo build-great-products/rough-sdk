@@ -2,7 +2,7 @@
 
 import type { Client, Options as Options2, TDataShape } from './client';
 import { client } from './client.gen';
-import type { CreateNoteData, CreateNoteErrors, CreateNoteResponses, CreatePendingAssetData, CreatePendingAssetErrors, CreatePendingAssetResponses, CreatePersonData, CreatePersonErrors, CreatePersonResponses, CreateReferenceData, CreateReferenceErrors, CreateReferenceResponses, CreateUserData, CreateUserErrors, CreateUserResponses, DeleteNoteData, DeleteNoteErrors, DeleteNoteResponses, GetBlockListData, GetBlockListErrors, GetBlockListResponses, GetCommentListData, GetCommentListErrors, GetCommentListResponses, GetContentData, GetContentErrors, GetContentListData, GetContentListErrors, GetContentListResponses, GetContentResponses, GetDocumentData, GetDocumentErrors, GetDocumentListData, GetDocumentListErrors, GetDocumentListResponses, GetDocumentResponses, GetLabelListData, GetLabelListErrors, GetLabelListResponses, GetNoteData, GetNoteErrors, GetNoteLabelListData, GetNoteLabelListErrors, GetNoteLabelListResponses, GetNoteListData, GetNoteListErrors, GetNoteListResponses, GetNoteResponses, GetPersonByEmailData, GetPersonByEmailErrors, GetPersonByEmailResponses, GetPersonData, GetPersonErrors, GetPersonListData, GetPersonListErrors, GetPersonListResponses, GetPersonResponses, GetReferenceListData, GetReferenceListErrors, GetReferenceListResponses, GetSequenceDocumentListData, GetSequenceDocumentListErrors, GetSequenceDocumentListResponses, GetSequenceListData, GetSequenceListErrors, GetSequenceListResponses, GetUserData, GetUserErrors, GetUserListData, GetUserListErrors, GetUserListResponses, GetUserResponses, GetWorkspaceData, GetWorkspaceErrors, GetWorkspaceResponses, UpdatePersonData, UpdatePersonErrors, UpdatePersonResponses } from './types.gen';
+import type { CreateAssetData, CreateAssetErrors, CreateAssetResponses, CreateNoteData, CreateNoteErrors, CreateNoteResponses, CreatePersonData, CreatePersonErrors, CreatePersonResponses, CreateReferenceData, CreateReferenceErrors, CreateReferenceResponses, CreateUserData, CreateUserErrors, CreateUserResponses, DeleteNoteData, DeleteNoteErrors, DeleteNoteResponses, GetBlockListData, GetBlockListErrors, GetBlockListResponses, GetCommentListData, GetCommentListErrors, GetCommentListResponses, GetContentData, GetContentErrors, GetContentListData, GetContentListErrors, GetContentListResponses, GetContentResponses, GetDocumentData, GetDocumentErrors, GetDocumentListData, GetDocumentListErrors, GetDocumentListResponses, GetDocumentResponses, GetLabelListData, GetLabelListErrors, GetLabelListResponses, GetNoteData, GetNoteErrors, GetNoteLabelListData, GetNoteLabelListErrors, GetNoteLabelListResponses, GetNoteListData, GetNoteListErrors, GetNoteListResponses, GetNoteResponses, GetPersonByEmailData, GetPersonByEmailErrors, GetPersonByEmailResponses, GetPersonData, GetPersonErrors, GetPersonListData, GetPersonListErrors, GetPersonListResponses, GetPersonResponses, GetReferenceListData, GetReferenceListErrors, GetReferenceListResponses, GetSequenceDocumentListData, GetSequenceDocumentListErrors, GetSequenceDocumentListResponses, GetSequenceListData, GetSequenceListErrors, GetSequenceListResponses, GetUserData, GetUserErrors, GetUserListData, GetUserListErrors, GetUserListResponses, GetUserResponses, GetWorkspaceData, GetWorkspaceErrors, GetWorkspaceResponses, UpdatePersonData, UpdatePersonErrors, UpdatePersonResponses } from './types.gen';
 
 export type Options<TData extends TDataShape = TDataShape, ThrowOnError extends boolean = boolean> = Options2<TData, ThrowOnError> & {
     /**
@@ -19,12 +19,12 @@ export type Options<TData extends TDataShape = TDataShape, ThrowOnError extends 
 };
 
 /**
- * Create a pending asset object, required before uploading a file
+ * Upload a file.
  *
- * Create a pending asset, and receive an authorization token to upload a file using the tus protocol.
+ * Upload a file to the workspace. The file will be processed and stored as an Asset.
  */
-export const createPendingAsset = <ThrowOnError extends boolean = false>(options?: Options<CreatePendingAssetData, ThrowOnError>) => {
-    return (options?.client ?? client).post<CreatePendingAssetResponses, CreatePendingAssetErrors, ThrowOnError>({
+export const createAsset = <ThrowOnError extends boolean = false>(options?: Options<CreateAssetData, ThrowOnError>) => {
+    return (options?.client ?? client).post<CreateAssetResponses, CreateAssetErrors, ThrowOnError>({
         security: [
             {
                 scheme: 'bearer',

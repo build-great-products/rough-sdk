@@ -18,7 +18,6 @@ export type Asset = {
         [key: string]: unknown;
     };
     byteSize: number;
-    tusUploadToken: string | unknown;
     url: string;
     thumbUrl: string | unknown;
 };
@@ -69,30 +68,7 @@ export type Content = {
 export type ContentList = Array<Content>;
 
 export type CreateAssetInput = {
-    originalFileName: string;
-    mimeType: string;
-    metadata: {
-        [key: string]: string | number | boolean;
-    };
-};
-
-export type CreateAssetOutput = {
-    id: string;
-    scope: 'WORKSPACE' | 'USER';
-    userId: string;
-    workspaceId?: string;
-    storageKey: string;
-    status: 'PENDING' | 'UPLOADING' | 'READY' | 'ERROR';
-    type: 'IMAGE' | 'VIDEO' | 'AUDIO' | 'OTHER';
-    mimeType: string;
-    originalFileName: string;
-    metadata: {
-        [key: string]: unknown;
-    };
-    byteSize: number;
-    tusUploadToken: string;
-    url: string;
-    thumbUrl: string | unknown;
+    file: Blob | File;
 };
 
 export type CreateNoteInput = {
@@ -328,14 +304,14 @@ export type UserWritable = {
 
 export type UserListWritable = Array<UserWritable>;
 
-export type CreatePendingAssetData = {
+export type CreateAssetData = {
     body?: CreateAssetInput;
     path?: never;
     query?: never;
     url: '/api/v1/asset';
 };
 
-export type CreatePendingAssetErrors = {
+export type CreateAssetErrors = {
     /**
      * Invalid input (path parameters, query string, or body)
      */
@@ -350,13 +326,13 @@ export type CreatePendingAssetErrors = {
     403: ErrorMessage;
 };
 
-export type CreatePendingAssetError = CreatePendingAssetErrors[keyof CreatePendingAssetErrors];
+export type CreateAssetError = CreateAssetErrors[keyof CreateAssetErrors];
 
-export type CreatePendingAssetResponses = {
-    200: CreateAssetOutput;
+export type CreateAssetResponses = {
+    200: Asset;
 };
 
-export type CreatePendingAssetResponse = CreatePendingAssetResponses[keyof CreatePendingAssetResponses];
+export type CreateAssetResponse = CreateAssetResponses[keyof CreateAssetResponses];
 
 export type GetBlockListData = {
     body?: never;
