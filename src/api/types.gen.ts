@@ -329,6 +329,9 @@ export type CreateAssetErrors = {
 export type CreateAssetError = CreateAssetErrors[keyof CreateAssetErrors];
 
 export type CreateAssetResponses = {
+    /**
+     * Success
+     */
     200: Asset;
 };
 
@@ -361,6 +364,9 @@ export type GetBlockListErrors = {
 export type GetBlockListError = GetBlockListErrors[keyof GetBlockListErrors];
 
 export type GetBlockListResponses = {
+    /**
+     * Success
+     */
     200: BlockList;
 };
 
@@ -391,6 +397,9 @@ export type GetCommentListErrors = {
 export type GetCommentListError = GetCommentListErrors[keyof GetCommentListErrors];
 
 export type GetCommentListResponses = {
+    /**
+     * Success
+     */
     200: CommentList;
 };
 
@@ -421,6 +430,9 @@ export type GetContentListErrors = {
 export type GetContentListError = GetContentListErrors[keyof GetContentListErrors];
 
 export type GetContentListResponses = {
+    /**
+     * Success
+     */
     200: ContentList;
 };
 
@@ -457,6 +469,9 @@ export type GetContentErrors = {
 export type GetContentError = GetContentErrors[keyof GetContentErrors];
 
 export type GetContentResponses = {
+    /**
+     * Success
+     */
     200: Content;
 };
 
@@ -492,6 +507,9 @@ export type GetDocumentListErrors = {
 export type GetDocumentListError = GetDocumentListErrors[keyof GetDocumentListErrors];
 
 export type GetDocumentListResponses = {
+    /**
+     * Success
+     */
     200: DocumentList;
 };
 
@@ -524,6 +542,9 @@ export type GetDocumentErrors = {
 export type GetDocumentError = GetDocumentErrors[keyof GetDocumentErrors];
 
 export type GetDocumentResponses = {
+    /**
+     * Success
+     */
     200: Document;
 };
 
@@ -554,6 +575,9 @@ export type GetLabelListErrors = {
 export type GetLabelListError = GetLabelListErrors[keyof GetLabelListErrors];
 
 export type GetLabelListResponses = {
+    /**
+     * Success
+     */
     200: LabelList;
 };
 
@@ -584,6 +608,9 @@ export type GetNoteLabelListErrors = {
 export type GetNoteLabelListError = GetNoteLabelListErrors[keyof GetNoteLabelListErrors];
 
 export type GetNoteLabelListResponses = {
+    /**
+     * Success
+     */
     200: NoteLabelList;
 };
 
@@ -614,6 +641,9 @@ export type GetNoteListErrors = {
 export type GetNoteListError = GetNoteListErrors[keyof GetNoteListErrors];
 
 export type GetNoteListResponses = {
+    /**
+     * Success
+     */
     200: NoteList;
 };
 
@@ -644,6 +674,9 @@ export type CreateNoteErrors = {
 export type CreateNoteError = CreateNoteErrors[keyof CreateNoteErrors];
 
 export type CreateNoteResponses = {
+    /**
+     * Success
+     */
     200: Note;
 };
 
@@ -680,6 +713,9 @@ export type DeleteNoteErrors = {
 export type DeleteNoteError = DeleteNoteErrors[keyof DeleteNoteErrors];
 
 export type DeleteNoteResponses = {
+    /**
+     * Success
+     */
     200: DeleteNoteOutput;
 };
 
@@ -712,6 +748,9 @@ export type GetNoteErrors = {
 export type GetNoteError = GetNoteErrors[keyof GetNoteErrors];
 
 export type GetNoteResponses = {
+    /**
+     * Success
+     */
     200: Note;
 };
 
@@ -746,6 +785,9 @@ export type GetPersonListErrors = {
 export type GetPersonListError = GetPersonListErrors[keyof GetPersonListErrors];
 
 export type GetPersonListResponses = {
+    /**
+     * Success
+     */
     200: PersonList;
 };
 
@@ -780,6 +822,9 @@ export type CreatePersonErrors = {
 export type CreatePersonError = CreatePersonErrors[keyof CreatePersonErrors];
 
 export type CreatePersonResponses = {
+    /**
+     * Success
+     */
     200: Person;
 };
 
@@ -816,6 +861,9 @@ export type GetPersonErrors = {
 export type GetPersonError = GetPersonErrors[keyof GetPersonErrors];
 
 export type GetPersonResponses = {
+    /**
+     * Success
+     */
     200: Person;
 };
 
@@ -852,6 +900,9 @@ export type UpdatePersonErrors = {
 export type UpdatePersonError = UpdatePersonErrors[keyof UpdatePersonErrors];
 
 export type UpdatePersonResponses = {
+    /**
+     * Success
+     */
     200: Person;
 };
 
@@ -888,6 +939,9 @@ export type GetPersonByEmailErrors = {
 export type GetPersonByEmailError = GetPersonByEmailErrors[keyof GetPersonByEmailErrors];
 
 export type GetPersonByEmailResponses = {
+    /**
+     * Success
+     */
     200: Person;
 };
 
@@ -918,6 +972,9 @@ export type GetReferenceListErrors = {
 export type GetReferenceListError = GetReferenceListErrors[keyof GetReferenceListErrors];
 
 export type GetReferenceListResponses = {
+    /**
+     * Success
+     */
     200: ReferenceList;
 };
 
@@ -948,6 +1005,9 @@ export type CreateReferenceErrors = {
 export type CreateReferenceError = CreateReferenceErrors[keyof CreateReferenceErrors];
 
 export type CreateReferenceResponses = {
+    /**
+     * Success
+     */
     200: Reference;
 };
 
@@ -978,6 +1038,9 @@ export type GetSequenceDocumentListErrors = {
 export type GetSequenceDocumentListError = GetSequenceDocumentListErrors[keyof GetSequenceDocumentListErrors];
 
 export type GetSequenceDocumentListResponses = {
+    /**
+     * Success
+     */
     200: SequenceDocumentList;
 };
 
@@ -1008,6 +1071,9 @@ export type GetSequenceListErrors = {
 export type GetSequenceListError = GetSequenceListErrors[keyof GetSequenceListErrors];
 
 export type GetSequenceListResponses = {
+    /**
+     * Success
+     */
     200: SequenceList;
 };
 
@@ -1038,6 +1104,9 @@ export type GetUserListErrors = {
 export type GetUserListError = GetUserListErrors[keyof GetUserListErrors];
 
 export type GetUserListResponses = {
+    /**
+     * Success
+     */
     200: UserList;
 };
 
@@ -1068,6 +1137,9 @@ export type CreateUserErrors = {
 export type CreateUserError = CreateUserErrors[keyof CreateUserErrors];
 
 export type CreateUserResponses = {
+    /**
+     * Success
+     */
     200: User;
 };
 
@@ -1104,6 +1176,9 @@ export type GetUserErrors = {
 export type GetUserError = GetUserErrors[keyof GetUserErrors];
 
 export type GetUserResponses = {
+    /**
+     * Success
+     */
     200: User;
 };
 
@@ -1134,6 +1209,9 @@ export type GetWorkspaceErrors = {
 export type GetWorkspaceError = GetWorkspaceErrors[keyof GetWorkspaceErrors];
 
 export type GetWorkspaceResponses = {
+    /**
+     * Success
+     */
     200: Workspace;
 };
 
