@@ -74,21 +74,23 @@ const oauth2 = createRoughOAuth2Provider({
 })
 ```
 
-## Uploading Images
+## Uploading Files
 
 ```typescript
-import { createPendingTusUpload, uploadFile } from '@roughapp/sdk'
+import { createAsset } from '@roughapp/sdk'
+import { readFile } from 'node:fs/promises'
 
-const result = createPendingTusUpload()
-if (result.error || !result.data) { /* ... */ }
-const uploadToken = result.data.token
+const buffer = await readFile('./image.jpg')
+const blob = new Blob(buffer)
 
-const uploadId = await uploadFile({
-    uploadToken,
-    data: Buffer.from(...),
-    fileName: 'image.jpg',
-    mimeType: 'image/jpeg',
+const asset = await createAsset({
+  auth: 'your-api-token',
+  body: {
+    file: blob,
+  }
 })
+
+// You can now use `asset.url` to reference the uploaded file.
 ```
 
 For detailed API documentation and request/response types, please refer to the source code or contact Rough support.
