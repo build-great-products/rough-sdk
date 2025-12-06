@@ -1,6 +1,6 @@
 {
   "name": "@roughapp/sdk",
-  "version": "4.1.1",
+  "version": "4.2.0",
   "packageManager": "pnpm@10.11.0",
   "type": "module",
   "main": "./dist/index.js",
