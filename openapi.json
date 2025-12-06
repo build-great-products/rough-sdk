@@ -1,0 +1,2529 @@
+{
+  "servers": [
+    {
+      "url": "https://in.rough.app",
+      "description": "Production API Server"
+    }
+  ],
+  "openapi": "3.0.0",
+  "info": {
+    "title": "Rough API",
+    "version": "1.0.0",
+    "description": "The Official Rough API"
+  },
+  "tags": [
+    {
+      "name": "Blocks",
+      "description": "Operations for managing blocks and their contents"
+    },
+    {
+      "name": "Comments",
+      "description": "Operations for managing comments"
+    },
+    {
+      "name": "Content",
+      "description": "Operations for managing content"
+    },
+    {
+      "name": "Documents",
+      "description": "Operations for managing documents and their contents"
+    },
+    {
+      "name": "Images",
+      "description": "Operations for managing images"
+    },
+    {
+      "name": "Labels",
+      "description": "Operations for managing labels"
+    },
+    {
+      "name": "File Uploads",
+      "description": "Operations for managing file uploads"
+    },
+    {
+      "name": "Notes",
+      "description": "Operations for creating and managing notes"
+    },
+    {
+      "name": "Note Labels",
+      "description": "Operations for managing note labels"
+    },
+    {
+      "name": "People",
+      "description": "Operations for managing people"
+    },
+    {
+      "name": "References",
+      "description": "Operations for managing references"
+    },
+    {
+      "name": "Sequences",
+      "description": "Operations for managing sequences"
+    },
+    {
+      "name": "Sequence Documents",
+      "description": "Operations for managing sequence documents"
+    },
+    {
+      "name": "Users",
+      "description": "User management and authentication operations"
+    },
+    {
+      "name": "Workspaces",
+      "description": "Workspace configuration and management"
+    }
+  ],
+  "security": [
+    {
+      "bearerAuth": []
+    }
+  ],
+  "components": {
+    "securitySchemes": {
+      "bearerAuth": {
+        "type": "http",
+        "scheme": "bearer",
+        "bearerFormat": "API Key",
+        "description": "Use a Bearer token for authentication. The token should be prefixed with \"Bearer \"."
+      }
+    },
+    "schemas": {
+      "Asset": {
+        "$id": "#/components/schemas/Asset",
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "scope": {
+            "type": "string",
+            "enum": ["WORKSPACE", "USER"]
+          },
+          "userId": {
+            "type": "string"
+          },
+          "workspaceId": {
+            "type": "string"
+          },
+          "storageKey": {
+            "type": "string"
+          },
+          "status": {
+            "type": "string",
+            "enum": ["PENDING", "UPLOADING", "READY", "ERROR"]
+          },
+          "type": {
+            "type": "string",
+            "enum": ["IMAGE", "VIDEO", "AUDIO", "OTHER"]
+          },
+          "mimeType": {
+            "type": "string"
+          },
+          "originalFileName": {
+            "type": "string"
+          },
+          "metadata": {
+            "oneOf": [
+              {
+                "type": "object",
+                "properties": {
+                  "type": {
+                    "type": "null",
+                    "const": null
+                  }
+                },
+                "required": ["type"],
+                "additionalProperties": false
+              },
+              {
+                "type": "object",
+                "properties": {
+                  "type": {
+                    "type": "string",
+                    "const": "VIDEO"
+                  },
+                  "mimeType": {
+                    "type": "string"
+                  },
+                  "duration": {
+                    "type": "number"
+                  },
+                  "width": {
+                    "type": "number"
+                  },
+                  "height": {
+                    "type": "number"
+                  }
+                },
+                "required": ["type"],
+                "additionalProperties": false
+              },
+              {
+                "type": "object",
+                "properties": {
+                  "type": {
+                    "type": "string",
+                    "const": "AUDIO"
+                  },
+                  "mimeType": {
+                    "type": "string"
+                  },
+                  "duration": {
+                    "type": "number"
+                  }
+                },
+                "required": ["type"],
+                "additionalProperties": false
+              },
+              {
+                "type": "object",
+                "properties": {
+                  "type": {
+                    "type": "string",
+                    "const": "IMAGE"
+                  },
+                  "mimeType": {
+                    "type": "string"
+                  },
+                  "width": {
+                    "type": "number"
+                  },
+                  "height": {
+                    "type": "number"
+                  }
+                },
+                "required": ["type"],
+                "additionalProperties": false
+              },
+              {
+                "type": "object",
+                "properties": {
+                  "type": {
+                    "type": "string",
+                    "const": "OTHER"
+                  },
+                  "mimeType": {
+                    "type": "string"
+                  }
+                },
+                "required": ["type"],
+                "additionalProperties": false
+              }
+            ]
+          },
+          "byteSize": {
+            "type": "number"
+          },
+          "url": {
+            "type": "string"
+          },
+          "thumbUrl": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          }
+        },
+        "required": [
+          "id",
+          "scope",
+          "userId",
+          "storageKey",
+          "status",
+          "type",
+          "mimeType",
+          "originalFileName",
+          "metadata",
+          "byteSize",
+          "url",
+          "thumbUrl"
+        ],
+        "additionalProperties": false
+      },
+      "Block": {
+        "$id": "#/components/schemas/Block",
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "sortOrder": {
+            "type": "number"
+          },
+          "parentBlockId": {
+            "type": "string"
+          },
+          "documentId": {
+            "type": "string"
+          },
+          "ownedByTeamId": {
+            "type": "string"
+          },
+          "ownedByPersonId": {
+            "type": "string"
+          },
+          "snoozedUntil": {
+            "type": "number"
+          },
+          "lockedAt": {
+            "type": "number"
+          },
+          "lastModifiedAt": {
+            "type": "number"
+          },
+          "type": {
+            "type": "string",
+            "enum": ["TEXT", "DRAWING"]
+          },
+          "data": {
+            "type": "object",
+            "properties": {
+              "title": {
+                "type": "string"
+              },
+              "canvasId": {
+                "type": "string"
+              },
+              "contentId": {
+                "type": "string"
+              }
+            },
+            "required": ["title"],
+            "additionalProperties": false
+          }
+        },
+        "required": ["id", "sortOrder", "documentId", "lastModifiedAt", "type"],
+        "additionalProperties": false
+      },
+      "BlockList": {
+        "$id": "#/components/schemas/BlockList",
+        "type": "array",
+        "items": {
+          "$ref": "#/components/schemas/Block"
+        }
+      },
+      "Comment": {
+        "$id": "#/components/schemas/Comment",
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "postedAt": {
+            "type": "number"
+          },
+          "userId": {
+            "type": "string"
+          },
+          "contentId": {
+            "type": "string"
+          },
+          "parentCommentId": {
+            "type": "string"
+          },
+          "documentId": {
+            "type": "string"
+          },
+          "sequenceId": {
+            "type": "string"
+          },
+          "noteId": {
+            "type": "string"
+          },
+          "onBlockId": {
+            "type": "string"
+          },
+          "onEventId": {
+            "type": "string"
+          },
+          "resolvedAt": {
+            "type": "number"
+          },
+          "resolvedByUserId": {
+            "type": "string"
+          }
+        },
+        "required": ["id", "postedAt", "userId", "contentId"],
+        "additionalProperties": false
+      },
+      "CommentList": {
+        "$id": "#/components/schemas/CommentList",
+        "type": "array",
+        "items": {
+          "$ref": "#/components/schemas/Comment"
+        }
+      },
+      "Content": {
+        "$id": "#/components/schemas/Content",
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "state": {
+            "type": "string"
+          },
+          "flagList": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        },
+        "required": ["id", "state", "flagList"],
+        "additionalProperties": false
+      },
+      "ContentList": {
+        "$id": "#/components/schemas/ContentList",
+        "type": "array",
+        "items": {
+          "$ref": "#/components/schemas/Content"
+        }
+      },
+      "CreateAssetInput": {
+        "$id": "#/components/schemas/CreateAssetInput",
+        "type": "object",
+        "properties": {
+          "file": {
+            "type": "string",
+            "format": "binary",
+            "contentEncoding": "binary"
+          }
+        },
+        "required": ["file"],
+        "additionalProperties": false
+      },
+      "CreateNoteInput": {
+        "$id": "#/components/schemas/CreateNoteInput",
+        "type": "object",
+        "properties": {
+          "createdByUserId": {
+            "type": "string"
+          },
+          "content": {
+            "description": "The plaintext content of the note.\n\n## Markdown\n\nIf `contentFormat=markdown`, then this will be parsed as Markdown.\n\nYou can embed images, videos and other media into your note.\nHowever, you can't reference remote URLs, you must first uploaded it to Rough as an asset.\nSee the `POST /api/v1/asset` endpoint for more information.\n\nAssets can then be embedded using the Markdown image syntax,\nreferencing the asset ID, for example:\n`![](rough://asset/01K4SNV7ERV0TMYNQ3TC728Y4Y)`.\n\nIf the asset is not found, then this endpoint will not create an note, and\ninstead return a 400 error.\n",
+            "type": "string"
+          },
+          "contentFormat": {
+            "default": "markdown",
+            "type": "string",
+            "enum": ["plaintext", "markdown"]
+          },
+          "referenceId": {
+            "type": "string"
+          },
+          "personId": {
+            "type": "string"
+          },
+          "lastModifiedAt": {
+            "type": "string",
+            "format": "date-time",
+            "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d(?::[0-5]\\d(?:\\.\\d+)?)?(?:Z))$"
+          }
+        },
+        "required": ["createdByUserId", "content", "contentFormat"],
+        "additionalProperties": false
+      },
+      "CreatePersonInput": {
+        "$id": "#/components/schemas/CreatePersonInput",
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "email": {
+            "type": "string"
+          },
+          "image": {
+            "type": "string",
+            "format": "uri"
+          },
+          "description": {
+            "type": "string"
+          }
+        },
+        "required": ["name"],
+        "additionalProperties": false
+      },
+      "CreateReferenceInput": {
+        "$id": "#/components/schemas/CreateReferenceInput",
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "minLength": 1
+          },
+          "url": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "required": ["name", "url"],
+        "additionalProperties": false
+      },
+      "CreateUserInput": {
+        "$id": "#/components/schemas/CreateUserInput",
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "email": {
+            "type": "string"
+          },
+          "image": {
+            "type": "string",
+            "format": "uri"
+          }
+        },
+        "required": ["name", "email"],
+        "additionalProperties": false
+      },
+      "DeleteNoteOutput": {
+        "$id": "#/components/schemas/DeleteNoteOutput",
+        "type": "object",
+        "properties": {},
+        "additionalProperties": false
+      },
+      "Document": {
+        "$id": "#/components/schemas/Document",
+        "type": "object",
+        "properties": {
+          "id": {
+            "description": "The unique identifier of the document",
+            "type": "string"
+          },
+          "title": {
+            "description": "The title of the document",
+            "type": "string"
+          },
+          "status": {
+            "description": "The status of the document",
+            "type": "string",
+            "enum": [
+              "CANCELED",
+              "IDEA",
+              "DEVELOPMENT",
+              "RELEASED",
+              "DRAFT",
+              "ARCHIVED"
+            ]
+          },
+          "publicId": {
+            "description": "The public identifier of the document",
+            "type": "number"
+          },
+          "createdByUserId": {
+            "description": "The unique identifier of the user who created the document",
+            "type": "string"
+          },
+          "ownedByTeamId": {
+            "description": "The unique identifier of the team that owns the document",
+            "type": "string"
+          },
+          "ownedByPersonId": {
+            "description": "The unique identifier of the person that owns the document",
+            "type": "string"
+          },
+          "vcsTagList": {
+            "description": "The list of VCS tags associated with the document",
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "archivedAt": {
+            "description": "The timestamp when the document was archived",
+            "type": "number"
+          },
+          "archivedByUserId": {
+            "description": "The unique identifier of the user who archived the document",
+            "type": "string"
+          },
+          "lastModifiedAt": {
+            "description": "The timestamp when the document was last modified",
+            "type": "number"
+          },
+          "releasedAt": {
+            "description": "The timestamp when the document was released",
+            "type": "number"
+          }
+        },
+        "required": [
+          "id",
+          "title",
+          "status",
+          "publicId",
+          "createdByUserId",
+          "vcsTagList",
+          "lastModifiedAt"
+        ],
+        "additionalProperties": false
+      },
+      "DocumentList": {
+        "$id": "#/components/schemas/DocumentList",
+        "type": "array",
+        "items": {
+          "$ref": "#/components/schemas/Document"
+        }
+      },
+      "ErrorMessage": {
+        "$id": "#/components/schemas/ErrorMessage",
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "string"
+          }
+        },
+        "required": ["message"],
+        "additionalProperties": false
+      },
+      "Label": {
+        "$id": "#/components/schemas/Label",
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "color": {
+            "type": "string"
+          }
+        },
+        "required": ["id", "name", "color"],
+        "additionalProperties": false
+      },
+      "LabelList": {
+        "$id": "#/components/schemas/LabelList",
+        "type": "array",
+        "items": {
+          "$ref": "#/components/schemas/Label"
+        }
+      },
+      "Note": {
+        "$id": "#/components/schemas/Note",
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "publicId": {
+            "type": "number"
+          },
+          "parentNoteId": {
+            "type": "string"
+          },
+          "status": {
+            "type": "string",
+            "enum": ["DRAFT", "ACTIVE"]
+          },
+          "contentId": {
+            "type": "string"
+          },
+          "referenceId": {
+            "type": "string"
+          },
+          "personId": {
+            "type": "string"
+          },
+          "userId": {
+            "type": "string"
+          },
+          "lastModifiedAt": {
+            "type": "number"
+          },
+          "transcriptContentId": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "id",
+          "publicId",
+          "status",
+          "contentId",
+          "personId",
+          "userId",
+          "lastModifiedAt"
+        ],
+        "additionalProperties": false
+      },
+      "NoteLabel": {
+        "$id": "#/components/schemas/NoteLabel",
+        "type": "object",
+        "properties": {
+          "noteId": {
+            "type": "string"
+          },
+          "labelId": {
+            "type": "string"
+          }
+        },
+        "required": ["noteId", "labelId"],
+        "additionalProperties": false
+      },
+      "NoteLabelList": {
+        "$id": "#/components/schemas/NoteLabelList",
+        "type": "array",
+        "items": {
+          "$ref": "#/components/schemas/NoteLabel"
+        }
+      },
+      "NoteList": {
+        "$id": "#/components/schemas/NoteList",
+        "type": "array",
+        "items": {
+          "$ref": "#/components/schemas/Note"
+        }
+      },
+      "Person": {
+        "$id": "#/components/schemas/Person",
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "email": {
+            "description": "[Deprecated] The person’s primary email address. Use emailList instead.",
+            "type": "string"
+          },
+          "emailList": {
+            "description": "All email addresses associated with this person. The first address is the primary address.",
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "imageSet": {
+            "readOnly": true,
+            "type": "object",
+            "properties": {
+              "16": {
+                "type": "string",
+                "format": "uri"
+              },
+              "32": {
+                "type": "string",
+                "format": "uri"
+              },
+              "64": {
+                "type": "string",
+                "format": "uri"
+              },
+              "128": {
+                "type": "string",
+                "format": "uri"
+              },
+              "256": {
+                "type": "string",
+                "format": "uri"
+              }
+            },
+            "required": ["16", "32", "64", "128", "256"],
+            "additionalProperties": false
+          },
+          "description": {
+            "type": "string"
+          }
+        },
+        "required": ["id", "name", "description"],
+        "additionalProperties": false
+      },
+      "PersonList": {
+        "$id": "#/components/schemas/PersonList",
+        "type": "array",
+        "items": {
+          "$ref": "#/components/schemas/Person"
+        }
+      },
+      "Reference": {
+        "$id": "#/components/schemas/Reference",
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "url": {
+            "type": "string"
+          }
+        },
+        "required": ["id", "name", "url"],
+        "additionalProperties": false
+      },
+      "ReferenceList": {
+        "$id": "#/components/schemas/ReferenceList",
+        "type": "array",
+        "items": {
+          "$ref": "#/components/schemas/Reference"
+        }
+      },
+      "Sequence": {
+        "$id": "#/components/schemas/Sequence",
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "publicId": {
+            "type": "string"
+          },
+          "type": {
+            "type": "string",
+            "enum": ["USER", "STATUS", "WISH"]
+          },
+          "ownedByPersonId": {
+            "type": "string"
+          },
+          "status": {
+            "type": "string",
+            "enum": [
+              "CANCELED",
+              "IDEA",
+              "DEVELOPMENT",
+              "RELEASED",
+              "DRAFT",
+              "ARCHIVED"
+            ]
+          },
+          "icon": {
+            "type": "string"
+          },
+          "pinned": {
+            "type": "number"
+          },
+          "groupBy": {
+            "type": "string",
+            "enum": ["NONE", "STATUS"]
+          }
+        },
+        "required": ["id", "name", "publicId", "type", "groupBy"],
+        "additionalProperties": false
+      },
+      "SequenceDocument": {
+        "$id": "#/components/schemas/SequenceDocument",
+        "type": "object",
+        "properties": {
+          "sequenceId": {
+            "type": "string"
+          },
+          "documentId": {
+            "type": "string"
+          },
+          "sortOrder": {
+            "type": "number"
+          }
+        },
+        "required": ["sequenceId", "documentId", "sortOrder"],
+        "additionalProperties": false
+      },
+      "SequenceDocumentList": {
+        "$id": "#/components/schemas/SequenceDocumentList",
+        "type": "array",
+        "items": {
+          "$ref": "#/components/schemas/SequenceDocument"
+        }
+      },
+      "SequenceList": {
+        "$id": "#/components/schemas/SequenceList",
+        "type": "array",
+        "items": {
+          "$ref": "#/components/schemas/Sequence"
+        }
+      },
+      "UpdatePersonInput": {
+        "$id": "#/components/schemas/UpdatePersonInput",
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "email": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "image": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "uri"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "description": {
+            "type": "string"
+          }
+        },
+        "additionalProperties": false
+      },
+      "User": {
+        "$id": "#/components/schemas/User",
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "email": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "imageSet": {
+            "readOnly": true,
+            "type": "object",
+            "properties": {
+              "16": {
+                "type": "string",
+                "format": "uri"
+              },
+              "32": {
+                "type": "string",
+                "format": "uri"
+              },
+              "64": {
+                "type": "string",
+                "format": "uri"
+              },
+              "128": {
+                "type": "string",
+                "format": "uri"
+              },
+              "256": {
+                "type": "string",
+                "format": "uri"
+              }
+            },
+            "required": ["16", "32", "64", "128", "256"],
+            "additionalProperties": false
+          },
+          "isDemoAccount": {
+            "type": "boolean"
+          }
+        },
+        "required": ["id", "email", "isDemoAccount"],
+        "additionalProperties": false
+      },
+      "UserList": {
+        "$id": "#/components/schemas/UserList",
+        "type": "array",
+        "items": {
+          "$ref": "#/components/schemas/User"
+        }
+      },
+      "Workspace": {
+        "$id": "#/components/schemas/Workspace",
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "publicId": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "icp": {
+            "type": "string"
+          },
+          "strategy": {
+            "type": "string"
+          },
+          "vision": {
+            "type": "string"
+          },
+          "icon": {
+            "type": "string"
+          }
+        },
+        "required": ["id", "publicId", "name"],
+        "additionalProperties": false
+      }
+    }
+  },
+  "paths": {
+    "/api/v1/asset": {
+      "post": {
+        "operationId": "createAsset",
+        "tags": ["File Uploads"],
+        "summary": "Upload a file.",
+        "description": "Upload a file to the workspace. The file will be processed and stored as an Asset.",
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Asset"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid input (path parameters, query string, or body)",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorMessage"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthenticated",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorMessage"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorMessage"
+                }
+              }
+            }
+          }
+        },
+        "requestBody": {
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateAssetInput"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/block": {
+      "get": {
+        "operationId": "getBlockList",
+        "tags": ["Blocks"],
+        "summary": "Get block list",
+        "description": "Get a list of blocks",
+        "parameters": [
+          {
+            "name": "documentId",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BlockList"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid input (path parameters, query string, or body)",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorMessage"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthenticated",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorMessage"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorMessage"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/comment": {
+      "get": {
+        "operationId": "getCommentList",
+        "tags": ["Comments"],
+        "summary": "Get comment list",
+        "description": "Get a list of comments",
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CommentList"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid input (path parameters, query string, or body)",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorMessage"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthenticated",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorMessage"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorMessage"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/content": {
+      "get": {
+        "operationId": "getContentList",
+        "tags": ["Content"],
+        "summary": "Get content list",
+        "description": "Get a list of content",
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ContentList"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid input (path parameters, query string, or body)",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorMessage"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthenticated",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorMessage"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorMessage"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/content/{contentId}": {
+      "get": {
+        "operationId": "getContent",
+        "tags": ["Content"],
+        "summary": "Get content",
+        "description": "Get content by its unique identifier",
+        "parameters": [
+          {
+            "name": "contentId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Content"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid input (path parameters, query string, or body)",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorMessage"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthenticated",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorMessage"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorMessage"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorMessage"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/document": {
+      "get": {
+        "operationId": "getDocumentList",
+        "tags": ["Documents"],
+        "summary": "List all documents",
+        "description": "Retrieves a list of all documents accessible to the authenticated user. Optionally includes archived documents.",
+        "parameters": [
+          {
+            "name": "includeArchived",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "description": "Whether to include archived documents in the list. Defaults to false.",
+              "default": false,
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DocumentList"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid input (path parameters, query string, or body)",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorMessage"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthenticated",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorMessage"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorMessage"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/document/{documentId}": {
+      "get": {
+        "operationId": "getDocument",
+        "tags": ["Documents"],
+        "summary": "Get a document",
+        "description": "Get a document by its unique identifier",
+        "parameters": [
+          {
+            "name": "documentId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Document"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid input (path parameters, query string, or body)",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorMessage"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthenticated",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorMessage"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorMessage"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/label": {
+      "get": {
+        "operationId": "getLabelList",
+        "tags": ["Labels"],
+        "summary": "Get label list",
+        "description": "Get a list of labels",
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/LabelList"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid input (path parameters, query string, or body)",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorMessage"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthenticated",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorMessage"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorMessage"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/note-label": {
+      "get": {
+        "operationId": "getNoteLabelList",
+        "tags": ["Note Labels"],
+        "summary": "Get note label list",
+        "description": "Get a list of note labels",
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/NoteLabelList"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid input (path parameters, query string, or body)",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorMessage"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthenticated",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorMessage"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorMessage"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/note": {
+      "get": {
+        "operationId": "getNoteList",
+        "tags": ["Notes"],
+        "summary": "Get note list",
+        "description": "Get a list of notes",
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/NoteList"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid input (path parameters, query string, or body)",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorMessage"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthenticated",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorMessage"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorMessage"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "operationId": "createNote",
+        "tags": ["Notes"],
+        "summary": "Create a note",
+        "description": "Create a note",
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Note"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorMessage"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthenticated",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorMessage"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorMessage"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Reference Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorMessage"
+                }
+              }
+            }
+          }
+        },
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateNoteInput"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/note/{noteId}": {
+      "delete": {
+        "operationId": "deleteNote",
+        "tags": ["Notes"],
+        "summary": "Delete a note",
+        "description": "Delete a note by its unique identifier",
+        "parameters": [
+          {
+            "name": "noteId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DeleteNoteOutput"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid input (path parameters, query string, or body)",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorMessage"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthenticated",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorMessage"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorMessage"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorMessage"
+                }
+              }
+            }
+          }
+        }
+      },
+      "get": {
+        "operationId": "getNote",
+        "tags": ["Notes"],
+        "summary": "Get a note",
+        "description": "Get a note by its unique identifier",
+        "parameters": [
+          {
+            "name": "noteId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Note"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid input (path parameters, query string, or body)",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorMessage"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthenticated",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorMessage"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorMessage"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/person": {
+      "get": {
+        "operationId": "getPersonList",
+        "tags": ["People"],
+        "summary": "Get person list",
+        "description": "Get a list of people",
+        "parameters": [
+          {
+            "name": "name",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "description",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "email",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "minLength": 1
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PersonList"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid input (path parameters, query string, or body)",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorMessage"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthenticated",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorMessage"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorMessage"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "operationId": "createPerson",
+        "tags": ["People"],
+        "summary": "Create person",
+        "description": "Create a person in the workspace",
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Person"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid input (path parameters, query string, or body)",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorMessage"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthenticated",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorMessage"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorMessage"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Person with email already exists",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorMessage"
+                }
+              }
+            }
+          }
+        },
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreatePersonInput"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/person/{personId}": {
+      "get": {
+        "operationId": "getPerson",
+        "tags": ["People"],
+        "summary": "Get person",
+        "description": "Get a person by their ID",
+        "parameters": [
+          {
+            "name": "personId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Person"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid input (path parameters, query string, or body)",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorMessage"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthenticated",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorMessage"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorMessage"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Person not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorMessage"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "operationId": "updatePerson",
+        "tags": ["People"],
+        "summary": "Update person",
+        "description": "Update a person in the workspace. The person must already exist in the workspace.",
+        "parameters": [
+          {
+            "name": "personId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Person"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid input (path parameters, query string, or body)",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorMessage"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthenticated",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorMessage"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorMessage"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Person not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorMessage"
+                }
+              }
+            }
+          }
+        },
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdatePersonInput"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/person/email/{email}": {
+      "get": {
+        "operationId": "getPersonByEmail",
+        "tags": ["People"],
+        "summary": "Get person by email",
+        "description": "Get a person by their email address",
+        "parameters": [
+          {
+            "name": "email",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "minLength": 1
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Person"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid input (path parameters, query string, or body)",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorMessage"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthenticated",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorMessage"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorMessage"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorMessage"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/reference": {
+      "get": {
+        "operationId": "getReferenceList",
+        "tags": ["References"],
+        "summary": "Get reference list",
+        "description": "Get a list of references",
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ReferenceList"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid input (path parameters, query string, or body)",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorMessage"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthenticated",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorMessage"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorMessage"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "operationId": "createReference",
+        "tags": ["References"],
+        "summary": "Create reference",
+        "description": "Create a reference in the workspace",
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Reference"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorMessage"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthenticated",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorMessage"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorMessage"
+                }
+              }
+            }
+          }
+        },
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateReferenceInput"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/sequence-document": {
+      "get": {
+        "operationId": "getSequenceDocumentList",
+        "tags": ["Sequence Documents"],
+        "summary": "Get sequence document list",
+        "description": "Get a list of sequence documents",
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SequenceDocumentList"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid input (path parameters, query string, or body)",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorMessage"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthenticated",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorMessage"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorMessage"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/sequence": {
+      "get": {
+        "operationId": "getSequenceList",
+        "tags": ["Sequences"],
+        "summary": "Get sequence list",
+        "description": "Get a list of sequences",
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SequenceList"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid input (path parameters, query string, or body)",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorMessage"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthenticated",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorMessage"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorMessage"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/user": {
+      "get": {
+        "operationId": "getUserList",
+        "tags": ["Users"],
+        "summary": "Get user list",
+        "description": "Get a list of users",
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UserList"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid input (path parameters, query string, or body)",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorMessage"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthenticated",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorMessage"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorMessage"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "operationId": "createUser",
+        "tags": ["Users"],
+        "summary": "Create user",
+        "description": "Create a user in the workspace",
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/User"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid input (path parameters, query string, or body)",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorMessage"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthenticated",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorMessage"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorMessage"
+                }
+              }
+            }
+          }
+        },
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateUserInput"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/user/{userId}": {
+      "get": {
+        "operationId": "getUser",
+        "tags": ["Users"],
+        "summary": "Get user",
+        "description": "Get a user",
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string",
+                  "const": "current"
+                },
+                {
+                  "type": "string"
+                }
+              ]
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/User"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid input (path parameters, query string, or body)",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorMessage"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthenticated",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorMessage"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorMessage"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "User not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorMessage"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/workspace/current": {
+      "get": {
+        "operationId": "getWorkspace",
+        "tags": ["Workspaces"],
+        "summary": "Get workspace",
+        "description": "Get the workspace",
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Workspace"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid input (path parameters, query string, or body)",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorMessage"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthenticated",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorMessage"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorMessage"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

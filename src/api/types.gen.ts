@@ -15,7 +15,25 @@ export type Asset = {
     mimeType: string;
     originalFileName: string;
     metadata: {
-        [key: string]: unknown;
+        type: unknown;
+    } | {
+        type: string;
+        mimeType?: string;
+        duration?: number;
+        width?: number;
+        height?: number;
+    } | {
+        type: string;
+        mimeType?: string;
+        duration?: number;
+    } | {
+        type: string;
+        mimeType?: string;
+        width?: number;
+        height?: number;
+    } | {
+        type: string;
+        mimeType?: string;
     };
     byteSize: number;
     url: string;
@@ -73,6 +91,25 @@ export type CreateAssetInput = {
 
 export type CreateNoteInput = {
     createdByUserId: string;
+    /**
+     * The plaintext content of the note.
+     *
+     * ## Markdown
+     *
+     * If `contentFormat=markdown`, then this will be parsed as Markdown.
+     *
+     * You can embed images, videos and other media into your note.
+     * However, you can't reference remote URLs, you must first uploaded it to Rough as an asset.
+     * See the `POST /api/v1/asset` endpoint for more information.
+     *
+     * Assets can then be embedded using the Markdown image syntax,
+     * referencing the asset ID, for example:
+     * `![](rough://asset/01K4SNV7ERV0TMYNQ3TC728Y4Y)`.
+     *
+     * If the asset is not found, then this endpoint will not create an note, and
+     * instead return a 400 error.
+     *
+     */
     content: string;
     contentFormat: 'plaintext' | 'markdown';
     referenceId?: string;
@@ -658,7 +695,7 @@ export type CreateNoteData = {
 
 export type CreateNoteErrors = {
     /**
-     * Invalid input (path parameters, query string, or body)
+     * Bad Request
      */
     400: ErrorMessage;
     /**
@@ -669,6 +706,10 @@ export type CreateNoteErrors = {
      * Forbidden
      */
     403: ErrorMessage;
+    /**
+     * Reference Not Found
+     */
+    404: ErrorMessage;
 };
 
 export type CreateNoteError = CreateNoteErrors[keyof CreateNoteErrors];
