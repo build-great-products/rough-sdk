@@ -29,10 +29,6 @@
       "description": "Operations for managing documents and their contents"
     },
     {
-      "name": "Images",
-      "description": "Operations for managing images"
-    },
-    {
       "name": "Labels",
       "description": "Operations for managing labels"
     },
@@ -254,20 +250,8 @@
           "sortOrder": {
             "type": "number"
           },
-          "parentBlockId": {
-            "type": "string"
-          },
           "documentId": {
             "type": "string"
-          },
-          "ownedByTeamId": {
-            "type": "string"
-          },
-          "ownedByPersonId": {
-            "type": "string"
-          },
-          "snoozedUntil": {
-            "type": "number"
           },
           "lockedAt": {
             "type": "number"
@@ -405,8 +389,8 @@
             "type": "string"
           },
           "content": {
-            "description": "The plaintext content of the note.\n\n## Markdown\n\nIf `contentFormat=markdown`, then this will be parsed as Markdown.\n\nYou can embed images, videos and other media into your note.\nHowever, you can't reference remote URLs, you must first uploaded it to Rough as an asset.\nSee the `POST /api/v1/asset` endpoint for more information.\n\nAssets can then be embedded using the Markdown image syntax,\nreferencing the asset ID, for example:\n`![](rough://asset/01K4SNV7ERV0TMYNQ3TC728Y4Y)`.\n\nIf the asset is not found, then this endpoint will not create an note, and\ninstead return a 400 error.\n",
-            "type": "string"
+            "type": "string",
+            "description": "The plaintext content of the note.\n\n## Markdown\n\nIf `contentFormat=markdown`, then this will be parsed as Markdown.\n\nYou can embed images, videos and other media into your note.\nHowever, you can't reference remote URLs, you must first uploaded it to Rough as an asset.\nSee the `POST /api/v1/asset` endpoint for more information.\n\nAssets can then be embedded using the Markdown image syntax,\nreferencing the asset ID, for example:\n`![](rough://asset/01K4SNV7ERV0TMYNQ3TC728Y4Y)`.\n\nIf the asset is not found, then this endpoint will not create an note, and\ninstead return a 400 error.\n"
           },
           "contentFormat": {
             "default": "markdown",
@@ -494,15 +478,14 @@
         "type": "object",
         "properties": {
           "id": {
-            "description": "The unique identifier of the document",
-            "type": "string"
+            "type": "string",
+            "description": "The unique identifier of the document"
           },
           "title": {
-            "description": "The title of the document",
-            "type": "string"
+            "type": "string",
+            "description": "The title of the document"
           },
           "status": {
-            "description": "The status of the document",
             "type": "string",
             "enum": [
               "CANCELED",
@@ -511,30 +494,27 @@
               "RELEASED",
               "DRAFT",
               "ARCHIVED"
-            ]
+            ],
+            "description": "The status of the document"
           },
           "publicId": {
-            "description": "The public identifier of the document",
-            "type": "number"
+            "type": "number",
+            "description": "The public identifier of the document"
           },
           "createdByUserId": {
-            "description": "The unique identifier of the user who created the document",
-            "type": "string"
-          },
-          "ownedByTeamId": {
-            "description": "The unique identifier of the team that owns the document",
-            "type": "string"
+            "type": "string",
+            "description": "The unique identifier of the user who created the document"
           },
           "ownedByPersonId": {
-            "description": "The unique identifier of the person that owns the document",
-            "type": "string"
+            "type": "string",
+            "description": "The unique identifier of the person that owns the document"
           },
           "vcsTagList": {
-            "description": "The list of VCS tags associated with the document",
             "type": "array",
             "items": {
               "type": "string"
-            }
+            },
+            "description": "The list of VCS tags associated with the document"
           },
           "archivedAt": {
             "description": "The timestamp when the document was archived",
@@ -545,8 +525,8 @@
             "type": "string"
           },
           "lastModifiedAt": {
-            "description": "The timestamp when the document was last modified",
-            "type": "number"
+            "type": "number",
+            "description": "The timestamp when the document was last modified"
           },
           "releasedAt": {
             "description": "The timestamp when the document was released",
@@ -559,6 +539,7 @@
           "status",
           "publicId",
           "createdByUserId",
+          "ownedByPersonId",
           "vcsTagList",
           "lastModifiedAt"
         ],
@@ -1266,8 +1247,8 @@
             "in": "query",
             "required": false,
             "schema": {
-              "description": "Whether to include archived documents in the list. Defaults to false.",
               "default": false,
+              "description": "Whether to include archived documents in the list. Defaults to false.",
               "type": "string"
             }
           }
