@@ -23,8 +23,8 @@ lint:
 fix:
   biome check --write --unsafe
 
-openapi-ts: && fix
-  node ./openapi-ts
+openapi: && fix
+  node ./openapi.ts
 
 knip:
   knip

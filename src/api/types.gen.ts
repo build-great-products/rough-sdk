@@ -43,11 +43,7 @@ export type Asset = {
 export type Block = {
     id: string;
     sortOrder: number;
-    parentBlockId?: string;
     documentId: string;
-    ownedByTeamId?: string;
-    ownedByPersonId?: string;
-    snoozedUntil?: number;
     lockedAt?: number;
     lastModifiedAt: number;
     type: 'TEXT' | 'DRAWING';
@@ -161,13 +157,9 @@ export type Document = {
      */
     createdByUserId: string;
     /**
-     * The unique identifier of the team that owns the document
-     */
-    ownedByTeamId?: string;
-    /**
      * The unique identifier of the person that owns the document
      */
-    ownedByPersonId?: string;
+    ownedByPersonId: string;
     /**
      * The list of VCS tags associated with the document
      */

@@ -45,7 +45,7 @@
   "knip": {
     "ignore": [
       "src/api/**",
-      "openapi-ts.ts"
+      "openapi.ts"
     ],
     "ignoreDependencies": [
       "@hey-api/client-fetch",
